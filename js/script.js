@@ -21,3 +21,14 @@ function mostrar_pas(){
     //btn_cerrar_pasa.classList.toggle("active"); 
 }
 
+//funcion ocultar barra menu en panel de admin
+const btn=document.querySelector(".icon-bar")
+let menu = document.querySelector(".menu");
+let opcion_title = document.querySelectorAll(".opcion-title");
+function hide(){
+    //poniendo la clase
+    menu.classList.toggle('hide');
+    btn.classList.toggle('center');
+    opcion_title.forEach((item)=> item.classList.toggle('hide'));
+}
+btn.addEventListener("click",hide);
