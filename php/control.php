@@ -100,6 +100,6 @@
         <div id="btn-cerrar" onclick="mostrar_pas();"><i class="fa-solid fa-xmark"></i></div>
         <iframe src="" name="iframe-pasajeros" id="iframe-pasajeros" frameborder="0"></iframe>
     </main>
-    <script src="../scripts/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
