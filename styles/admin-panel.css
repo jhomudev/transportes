@@ -13,7 +13,6 @@ body{
     position: relative;
     width: 13em;
     background: #1c1b2b;
-    padding: 10px;
     transition:all 0.3s;
 }
 .menu.hide{
@@ -22,15 +21,15 @@ body{
 .menu .icon-bar{
     position: absolute;
     right: 0; 
-    margin: 5px 17px;
-    font-size: 25px;
+    margin: 15px 17px;
+    font-size: 20px;
     cursor: pointer;
     color:white;
     transition:all 0.3s;
 }
 .menu .icon-bar.center{
     position: relative;
-    margin: 5px auto;
+    margin: 15px auto;
     text-align: center;
 }
 .menu .logo{
@@ -56,8 +55,10 @@ body{
     list-style: none;
 }
 .menu .opciones ul li{
+    font-family: 'Dosis', sans-serif;
+    position: relative;
     background: #1c1b2b;
-    width: 90%;
+    width: 80%;
     margin: 10px auto;
     padding: 10px;
     border-radius: 5px;
@@ -75,24 +76,52 @@ body{
 .menu .opciones ul li:hover{
     background: #26243b;
 }
+.menu.hide .opciones li::before{
+    content: var(--text);
+    position: absolute;
+    background: var(--color);
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    -ms-border-radius:3px;
+    -o-border-radius:3px;
+    color:white;
+    width: 0;
+    height: 0;
+    top: 0;
+    text-align: center;
+    transform: translate(30px,-10px);
+    overflow: hidden;
+    transition:all 0.3s;
+    z-index: 1000;
+}
+.menu.hide .opciones li:hover::before{
+    width: 4em;
+    height: auto;
+    padding: 5px;
+}
 .menu .opciones ul li a{
     text-decoration: none;
-    font-family: 'Dosis', sans-serif;
     font-weight: 600;
     font-size: 18px;
     letter-spacing:1px;
     color:white;
     padding: 5px;
-    display:flex;
+    display:flex; 
 }
 .menu .opciones ul li a span{
-    margin-left: 1em;
+    position: relative;
     overflow: hidden;
+    margin-left: 10px;
+}
+.menu .opciones ul li a i{
+    width: 25px;
+    text-align: center;
 }
 .menu .opciones ul li a span.hide{
-    /* display:none; */
     width: 0;
     overflow: hidden;
+    display:none;
 }
 iframe.vista{
     position: relative;
