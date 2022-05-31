@@ -32,3 +32,4 @@ function hide(){
     opcion_title.forEach((item)=> item.classList.toggle('hide'));
 }
 btn.addEventListener("click",hide);
+
