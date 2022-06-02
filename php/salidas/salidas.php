@@ -67,22 +67,6 @@
             padding: 15px 20px;
             border:1px solid #44DB6C;
         }
-        .btn-cerrar{
-            position: absolute;
-            display:none;
-            padding:5px 13px;
-            left: 22%;
-            top: 160px;
-            background: white;
-            border-radius: 50%;
-            cursor: pointer;
-            border:1px solid #44DB6C;
-            z-index: 1000;
-        }
-        .btn-cerrar.active{display:block;}
-        .btn-cerrar:hover{
-            background: #D5E7DA;
-        }
     </style>
 </head>
 <body>
@@ -192,9 +176,6 @@
             }	
         ?>
     </table>
-    <div class="btn-cerrar">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
     <div class="container-iframe">
         <iframe src="" name="iframe-edit" frameborder="0"></iframe>
     </div>
@@ -215,10 +196,9 @@
         function mostrar_iframe(){
             setTimeout(() => {
                 iframe_edit.classList.toggle('active');
-                btn_show_iframe_edit.classList.toggle('active');
             },100);
         }
-        btn_show_iframe_edit.onclick=mostrar_iframe;
+        iframe_edit.onclick=mostrar_iframe;
     </script>
 </body>
 </html>
