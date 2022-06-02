@@ -120,7 +120,7 @@
                             <td>'.$asiento.'</td>
                             <td>
                                 <a class="btn btn-outline-danger" href="eli_reser.php?id=&salida='.$salida.'&n_asiento='.$asiento.'" ><i class="fa-solid fa-trash"></i></a>
-                                <a class="btn btn-outline-primary" href="edit_salida.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$asiento.'"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn btn-outline-primary" href="edit_reser.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$asiento.'"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <a class="btn btn-outline-success" target="_blank" href="boleta.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$asiento.'"><i class="fa-solid fa-ticket"></i></a>
                             </td>
                         </tr>

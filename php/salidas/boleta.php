@@ -180,7 +180,7 @@
                 <tr><td class="t-impo"><strong>SUBTOTAL</strong> </td><td class="impo tex-right">  S/ <?php echo $monto; ?></td></tr>
                 <tr><td class="t-impo"><strong>DESCUENTO</strong> </td><td class="impo tex-right">  S/ 0.00</td></tr>
                 <tr><td class="t-impo"><strong>IGV 18%</strong>     </td><td class="impo tex-right"> S/ <?php echo round(($monto*0.18),2); ?></td></tr>
-                <tr><td class="t-impo"><strong>IMPORTE TOTAL</strong></td><td class="impo tex-right"> S/ <?php echo round($monto-($monto*0.18),2); ?></td></tr>
+                <tr><td class="t-impo"><strong>IMPORTE TOTAL</strong></td><td class="impo tex-right"> S/ <?php echo round($monto+($monto*0.18),2); ?></td></tr>
             </table>
         </div>
         <footer>
