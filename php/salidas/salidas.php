@@ -44,6 +44,45 @@
         td{
             padding: 15px !important;
         }
+        .container-iframe{
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.3);
+            display:none;
+            place-items:center;
+        }
+        .container-iframe.active{
+            display:grid;
+            place-items:center;
+        }
+        .container-iframe iframe{
+            position: absolute;
+            width: 455px;
+            height: 595px;
+            background: white;
+            border-radius: 5px;
+            padding: 15px 20px;
+            border:1px solid #44DB6C;
+        }
+        .btn-cerrar{
+            position: absolute;
+            display:none;
+            padding:5px 13px;
+            left: 22%;
+            top: 160px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            border:1px solid #44DB6C;
+            z-index: 1000;
+        }
+        .btn-cerrar.active{display:block;}
+        .btn-cerrar:hover{
+            background: #D5E7DA;
+        }
     </style>
 </head>
 <body>
@@ -123,6 +162,7 @@
                 <th scope="col">HORA</th>
                 <th scope="col">ORIGEN</th>
                 <th scope="col">DESTINO</th>
+                <th scope="col">OPCIONES</th>
             </tr>
         </thead>
         <?php
@@ -143,11 +183,21 @@
                         <td>'.$hora.'</td>
                         <td>'.$origen.'</td>
                         <td>'.$destino.'</td>
+                        <td>
+                            <a href="eli_salida.php?salida='.$ids.'" class="btn btn-danger" title="Eliminar salida"><i class="fa-solid fa-trash"></i></a>
+                            <a target="iframe-edit" onclick="mostrar_iframe();" href="edit_salida.php?salida='.$ids.'" class="btn btn-primary" title="Editar salida"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </td>
                     </tr>
                 '; 		
             }	
         ?>
     </table>
+    <div class="btn-cerrar">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="container-iframe">
+        <iframe src="" name="iframe-edit" frameborder="0"></iframe>
+    </div>
     <script>
         function valide(event){
             if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
@@ -159,6 +209,16 @@
             form.classList.toggle('active');
         }
         btn_add.onclick=show;
+        //funcion parav aparecer iframe de editar salida 
+        const btn_show_iframe_edit=document.querySelector(".btn-cerrar");
+        let iframe_edit=document.querySelector(".container-iframe");
+        function mostrar_iframe(){
+            setTimeout(() => {
+                iframe_edit.classList.toggle('active');
+                btn_show_iframe_edit.classList.toggle('active');
+            },100);
+        }
+        btn_show_iframe_edit.onclick=mostrar_iframe;
     </script>
 </body>
 </html>
