@@ -37,7 +37,7 @@
 			    <label for="codigo">Asiento a reservar</label>
 			    <!-- <input type="text" class="form-control" name="s3" id="s3" onkeypress="valide(event);" maxlength="2"
 			    value=''/> -->
-                <select class="form-control"  name="tx_asiento" id="s3">
+                <select class="form-control"  name="tx_asiento" id="s3" required>
                     <option value="" selected disabled>Solo se muestran los asientos disponibles</option>
                     <option value="<?php echo $n_asiento; ?>">Asiento N° <?php echo $n_asiento; ?> (Asiento elegido)</option>
                     <?php
