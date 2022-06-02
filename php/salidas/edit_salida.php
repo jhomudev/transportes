@@ -39,6 +39,7 @@
 			    value=''/> -->
                 <select class="form-control"  name="tx_asiento" id="s3">
                     <option value="" selected disabled>Solo se muestran los asientos disponibles</option>
+                    <option value="<?php echo $n_asiento; ?>">Asiento N° <?php echo $n_asiento; ?></option>
                     <?php
                         //para el select de asientos
                         $var= "select * from asientos where estado='DISPONIBLE' and id_salida=$salida";

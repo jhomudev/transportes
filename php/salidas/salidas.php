@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a8527aea5d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../styles/style.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Salidas</title>
@@ -46,7 +47,7 @@
     </style>
 </head>
 <body>
-    <button class="btn btn-info" id="btn-add">Agregar Salida</button>
+    <button class="btn btn-info" id="btn-add"><i class="fa-solid fa-circle-plus"></i> Agregar Salida</button>
     <form action="salidas.php" method="post" id="form-add">
         <div class="mb-3">
 		    <label for="codigo">Id. Salida</label>
@@ -69,7 +70,7 @@
 		    <input type="time" class="form-control" name="tx_hora" required/>
 		</div>	
 		<div class="mb-3">
-		    <label for="codigo">Monto</label>
+		    <label for="codigo">Monto S/</label>
 		    <input type="text" class="form-control" name="tx_monto" id="s3" onkeypress="valide(event)" required />
 		</div>	
         <?php
