@@ -13,8 +13,9 @@
         .see-clientes{
             position: relative;
             width: 98%;
-            padding: 20px;
+            padding: 20px 40px;
             border-radius:5px;
+            text-align:center;
         }
         .nav{
             position: relative;
@@ -28,7 +29,7 @@
             background: #2C2E2D;
         }
         .nav input{
-            width: 20em;
+            width: 15em;
             padding: 5px 10px;
             border-radius:3px;
             border: none;
@@ -37,11 +38,22 @@
             outline: none;
         }
         .nav ul{
-            margin-top: 10px;
+            position: relative;
+            margin-top: 15px;
             display:flex;
-            gap:5px;
+            gap:10px;
             list-style:none;
             align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+            font-weight: 600;
+            color:white;
+        }
+        a:hover{
+            color:cyan;
         }
         .nav li{
             cursor:pointer;
@@ -50,34 +62,48 @@
             position: relative;
             margin-top: 20px;
         }
+        iframe{
+            width: 100%;
+            height: 500px;
+            display:none;
+        }
+        /* .text-left{
+            text-align: left !important;
+        } */
     </style>
 </head>
 <body>
     <div class="see-clientes">
+        <h1>Gestión de reservas</h1>
         <nav class="nav">
             <ul>
+                <li><a href="reservas.php">TODAS</a></li>
                 <?php
                     include'../conexion.php';
                     $sql="SELECT * from salidas";
                     $sql_res=$conexion->query($sql);
                     while ($row=$sql_res->fetch_array()){
                         echo'
-                            <li>'.$row['id_salida'].'</li>
+                            <li><a onclick="show_iframe();" href="search_sal.php?salida='.$row['id_salida'].'" target="iframe-table">S°'.$row['id_salida'].'</a></li>
                         ';
                     }
                 ?>
             </ul>
-            <input type="text" id="tx_cliente" placeholder="Escriba el nombre del cliente que busca">
+            <input type="text" id="tx_cliente" placeholder="Buscar reserva por cliente">
         </nav> 
         <table class="table table-striped text-center" id="tabla">
             <thead class="table-dark">
+                    <th>Salida</th>
+                    <th>Asiento</th>
                     <th>DNI</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Sexo</th>
+                    <th>Cliente</th>
+                    <th>Fecha de Emisión</th>
+                    <th>Monto S/</th>
             </thead>
             <tbody id="body-table"></tbody>
         </table>
+        <iframe src="" name="iframe-table" id="iframe-table" frameborder="0"></iframe>   
+           
     </div>
     <script>
         $(search());
@@ -103,6 +129,12 @@
                 search(valor);
             }
         })
+
+        function show_iframe(){
+            document.querySelector('#tabla').style.display='none';
+            document.querySelector('#iframe-table').style.display='block';
+            document.querySelector('#tx_cliente').disabled=true;
+        }
     </script>
 </body>
 </html>
