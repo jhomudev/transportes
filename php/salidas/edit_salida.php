@@ -22,8 +22,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../../styles/style.css">
     <title>Document</title>
+    <style>
+        body{
+            background: transparent !important;
+        }
+    </style>
 </head>
 <body>
+    <h3>Editar Salida</h3>
     <form action="#" method="post" id="form-add">
         <div class="mb-3">
 		    <label for="codigo">Id. Salida</label>
