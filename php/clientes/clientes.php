@@ -13,7 +13,7 @@
         .see-clientes{
             position: relative;
             width: 98%;
-            padding: 20px;
+            padding: 20px 40px;
             border-radius:5px;
         }
         .nav{
