@@ -14,7 +14,6 @@
             position: relative;
             width: 98%;
             padding: 20px;
-            background: #ecf1f9;
             border-radius:5px;
         }
         .nav{
@@ -23,10 +22,11 @@
             justify-content: space-between;
             align-items: center;
             margin: 10px;
-            background: #49d4cd;
             padding: 10px 20px;
             border-radius:5px;
+            background: #EAF2EC;
             color:white;
+            background: #2C2E2D;
         }
         .nav input{
             width: 20em;
@@ -35,7 +35,7 @@
             border: none;
         }
         .nav input:focus{
-            outline:none;
+            outline: none;
         }
         table{
             position: relative;
