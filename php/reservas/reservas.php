@@ -98,7 +98,7 @@
                     <th>DNI</th>
                     <th>Cliente</th>
                     <th>Fecha de Emisión</th>
-                    <th>Monto S/</th>
+                    <th>Monto</th>
             </thead>
             <tbody id="body-table"></tbody>
         </table>

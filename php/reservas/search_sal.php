@@ -34,7 +34,7 @@
                         <td>'.$row['dni'].'</td>
                         <td>'.$row['nombres'].' '.$row['apellidos'].'</td>
                         <td>'.$row['fec_emi'].'</td>
-                        <td>'.$row['monto'].'</td>
+                        <td> S/'.$row['monto'].'</td>
                         </tr>
                     ';
                 }

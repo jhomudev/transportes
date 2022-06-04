@@ -186,7 +186,7 @@
             		echo '
                         <tr>
                             <td><a href="control.php?salida='.$ids.'">'.$ids.'</a></td>
-                            <td>'.$mon.'</td>
+                            <td>S/ '.$mon.'</td>
                             <td>'.$fecha.'</td>
                             <td>'.$hora.'</td>
                             <td>'.$origen.'</td>

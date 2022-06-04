@@ -5,7 +5,7 @@
     $sql="SELECT * from clientes";
     if(isset($_POST['consulta'])){
         $q=$_POST['consulta']; 
-        $sql="SELECT * from clientes where nombres like '%".$q."%'  OR apellidos like '%".$q."%'";
+        $sql="SELECT * from clientes where CONCAT(nombres,' ', apellidos) like '%".$q."%'";
     }
     $sql_res=$conexion->query($sql);
     if($sql_res -> num_rows > 0){
