@@ -21,6 +21,7 @@
             align-items: center;
             gap:50px;
             width: 100%;
+            padding: 10px 40px;
         }
         input[type="submit"]{
             width: 88%;
