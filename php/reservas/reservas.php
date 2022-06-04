@@ -41,7 +41,7 @@
             position: relative;
             margin-top: 15px;
             display:flex;
-            gap:10px;
+            gap:15px;
             list-style:none;
             align-items: center;
             justify-content: center;
@@ -84,7 +84,7 @@
                     $sql_res=$conexion->query($sql);
                     while ($row=$sql_res->fetch_array()){
                         echo'
-                            <li><a onclick="show_iframe();" href="search_sal.php?salida='.$row['id_salida'].'" target="iframe-table">S°'.$row['id_salida'].'</a></li>
+                            <li><a onclick="show_iframe();" href="search_sal.php?salida='.$row['id_salida'].'" target="iframe-table">S.'.$row['id_salida'].'</a></li>
                         ';
                     }
                 ?>
