@@ -57,7 +57,7 @@
 			</table>
 			&nbsp;&nbsp;<a class="btn btn-danger" href="eli_reser.php?id='.$id_asiento.'&salida='.$salida.'&n_asiento='.$n_asiento.'"><i class="fa-solid fa-trash-can"></i> Eliminar</a>
 			<a class="btn btn-info" href="edit_reser.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$n_asiento.'"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-			<a class="btn btn-success" target="_blank" href="boleta.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$n_asiento.'"><i class="fa-solid fa-ticket"></i> Imprimir boleta</a>
+			<a class="btn btn-success" target="_blank" href="boleta.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$n_asiento.'"><i class="fa-solid fa-ticket"></i> Boleta</a>
 			';
 		} 
 	}
