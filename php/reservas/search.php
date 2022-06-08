@@ -5,7 +5,7 @@
     $sql="SELECT c.nombres,c.apellidos,c.dni,r.id_salida,r.asiento,r.fec_emi,r.monto from con_pasajero r inner join clientes c on r.dni = c.dni";
     if(isset($_POST['consulta'])){
         $q=$_POST['consulta']; 
-        $sql="SELECT c.nombres,c.apellidos,c.dni,r.id_salida,r.asiento,r.fec_emi,r.monto from con_pasajero r inner join clientes c on r.dni = c.dni where CONCAT(c.nombres,' ', c.apellidos)like '%".$q."%'";
+        $sql="SELECT c.nombres,c.apellidos,c.dni,r.id_salida,r.asiento,r.fec_emi,r.monto from con_pasajero r inner join clientes c on r.dni = c.dni where CONCAT(c.nombres,' ', c.apellidos) like '%".$q."%' or r.id_salida like '%".$q."%'";
     }
     $sql_res=$conexion->query($sql);
     if($sql_res -> num_rows > 0){

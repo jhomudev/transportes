@@ -77,15 +77,16 @@
         <h1>Gestión de reservas</h1>
         <nav class="nav">
             <ul>
-                <li><a href="reservas.php">TODAS</a></li>
+                <li onclick="search();">TODAS</li>
                 <?php
                     include'../conexion.php';
                     $sql="SELECT * from salidas";
                     $sql_res=$conexion->query($sql);
                     while ($row=$sql_res->fetch_array()){
-                        echo'
-                            <li><a onclick="show_iframe();" href="search_sal.php?salida='.$row['id_salida'].'" target="iframe-table">S.'.$row['id_salida'].'</a></li>
-                        ';
+                        $id=$row['id_salida'];
+                ?>
+                        <li onclick="search('<?php echo $id;?>');"><?php echo $id;?></li>                      
+                <?php
                     }
                 ?>
             </ul>
