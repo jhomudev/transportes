@@ -102,9 +102,7 @@
                     <th>Monto</th>
             </thead>
             <tbody id="body-table"></tbody>
-        </table>
-        <iframe src="" name="iframe-table" id="iframe-table" frameborder="0"></iframe>   
-           
+        </table>           
     </div>
     <script>
         $(search());
@@ -130,12 +128,6 @@
                 search(valor);
             }
         })
-
-        function show_iframe(){
-            document.querySelector('#tabla').style.display='none';
-            document.querySelector('#iframe-table').style.display='block';
-            document.querySelector('#tx_cliente').disabled=true;
-        }
     </script>
 </body>
 </html>
