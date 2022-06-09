@@ -146,30 +146,41 @@
                         $fecha=$_POST["tx_fecha"];
                         $hora=$_POST["tx_hora"];
                         $monto=$_POST["tx_monto"];
-                        //insertar salida
-                        $sql="INSERT INTO salidas VALUES($salida,'$fecha','$hora','$origen','$destino',$monto)";
-                        $sql_re=$conexion->query($sql);
-                        //creando asientos de la salida
-                        $i=1;
-                        while($i<=36){
-                            $sql="INSERT INTO asientos(id_salida,n_asiento,estado) VALUES($salida,'$i','DISPONIBLE')";
-                            $sql_re=$conexion->query($sql);
-                            $i++;
-                        }  
-                        try{
+                        $sql_com="SELECT * FROM salidas where id_salida=$salida";
+                        $sql_com_res=$conexion->query($sql_com);
+                        if($sql_com_res -> num_rows > 0){
                             echo'
-                            <div class="alert alert-success" role="alert">
-                            <i>Listo.</i> Los datos se insertaron correctamente.
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Esta salida ya existe. Debe crear una con un id nuevo. De preferencia continua a las demás.</strong>  
                             </div> 
                             ';
                         }
-                        catch (Exception $e){
-                            echo'
-                            <div class="alert alert-danger" role="alert">
-                            <i>Error.</i> Los datos se no se insertaron.
-                            </div> 
-                            ';
-                        } 
+                        else{
+                            //insertar salida
+                            $sql="INSERT INTO salidas VALUES($salida,'$fecha','$hora','$origen','$destino',$monto)";
+                            $sql_re=$conexion->query($sql);
+                            //creando asientos de la salida
+                            $i=1;
+                            while($i<=36){
+                                $sql="INSERT INTO asientos(id_salida,n_asiento,estado) VALUES($salida,'$i','DISPONIBLE')";
+                                $sql_re=$conexion->query($sql);
+                                $i++;
+                            }  
+                            try{
+                                echo'
+                                <div class="alert alert-success" role="alert">
+                                <i>Listo.</i> Los datos se insertaron correctamente.
+                                </div> 
+                                ';
+                            }
+                            catch (Exception $e){
+                                echo'
+                                <div class="alert alert-danger" role="alert">
+                                <i>Error.</i> Los datos se no se insertaron.
+                                </div> 
+                                ';
+                            } 
+                        }
                     }  
                 ?>
             </form>
@@ -214,7 +225,6 @@
             ?>
         </table>
     </div>
-    
     <div class="container-iframe">
         <iframe src="" name="iframe-edit" frameborder="0"></iframe>
     </div>
