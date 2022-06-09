@@ -21,7 +21,7 @@
             align-items: center;
             gap:50px;
             width: 100%;
-            padding: 10px 40px;
+            padding: 10px 20px;
         }
         input[type="submit"]{
             width: 88%;
@@ -85,6 +85,19 @@
             }
             form .mb-3{
                 width: 10em;
+            }
+            
+        }
+        @media screen and (max-width: 715px) {
+            *{
+                font-size:10px;
+            }
+            .content-form{
+                width:98% ;
+            }
+            .container-iframe iframe{
+                width: auto;
+                height: 450px;
             }
         }
     </style>

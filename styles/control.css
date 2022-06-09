@@ -123,34 +123,25 @@ iframe#iframe-pasajeros.active{
     background: #fcfafa;
     color:red;
 }
-/* botoon cerrar de resrvar asiento. no funiciona bien aun*/
-/* #btn-cerrar-pasa{
-    position: absolute;
-    top:250px;
-    right: -100%;
-    padding:6px 13px ;
-    background: white;
-    border:2px solid #44e7a9;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    cursor: pointer;
-    z-index: 9999;
-    transition:right 0.3s ,opacity 5s;
-    -webkit-transition:right 0.3s ,opacity 2s;
-    -moz-transition:right 0.3s ,opacity 5s;
-    -ms-transition:right 0.3s ,opacity 5s;
-    -o-transition:right 0.3s ,opacity 5s;
-    opacity:0;
+@media screen and (max-width: 715px) {
+    *{
+        font-size:10px;
+    }
+    body{
+        padding: 20px 20px;
+    }
+    iframe#iframe-res.active{
+        width: 100%;  
+    }
+    
+    
 }
-#btn-cerrar-pasa.active{
-    right: 48.5%;
-    opacity:1;
+@media screen and (max-width: 315px){
+    #autobus{
+        width:100%;
+    }
+    img{
+        width:50px;
+        height:50px;
+    }
 }
-#btn-cerrar-pasa:hover{
-    background: #fcfafa;
-    color:red;
-} */
-

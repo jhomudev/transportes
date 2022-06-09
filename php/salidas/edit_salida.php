@@ -26,6 +26,15 @@
         body{
             background: transparent !important;
         }
+		@media screen and (max-width: 715px) {
+            *{
+                font-size:10px;
+            }
+			body{
+                padding: 20px 20px;
+            }
+        }
+	
     </style>
 </head>
 <body>

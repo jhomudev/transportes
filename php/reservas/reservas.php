@@ -13,7 +13,7 @@
         .see-clientes{
             position: relative;
             width: 98%;
-            padding: 20px 40px;
+            padding: 20px;
             border-radius:5px;
             text-align:center;
         }
@@ -41,6 +41,7 @@
             position: relative;
             margin-top: 15px;
             display:flex;
+            flex-wrap: wrap;
             gap:15px;
             list-style:none;
             align-items: center;
@@ -67,9 +68,14 @@
             height: 500px;
             display:none;
         }
-        /* .text-left{
-            text-align: left !important;
-        } */
+        @media screen and (max-width: 715px) {
+            *{
+                font-size:10px;
+            }
+            .see-clientes{
+                padding: 0;
+            }
+        }
     </style>
 </head>
 <body>

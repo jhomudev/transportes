@@ -13,7 +13,7 @@
         .see-clientes{
             position: relative;
             width: 98%;
-            padding: 20px 40px;
+            padding: 20px;
             border-radius:5px;
         }
         .nav{
@@ -40,6 +40,15 @@
         table{
             position: relative;
             margin-top: 20px;
+        }
+        @media screen and (max-width: 715px) {
+            *{
+                font-size:10px;
+            }
+            .see-clientes{
+                width: 98%;
+                padding: 0;           
+            }
         }
     </style>
 </head>
