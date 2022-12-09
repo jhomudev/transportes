@@ -1,6 +1,7 @@
 <?php
     ob_start();
-    include "../conexion.php";
+    include_once "../conexion.php";
+    $objConexion = new Conexion();
     $salida=$_GET['salida'];
 ?>
 <!DOCTYPE html>
@@ -34,12 +35,12 @@
 <body>
     <?php
         //comprobar si la salida tiene reservas 
-        $sql_com="SELECT * FROM con_pasajero where id_salida=$salida";
-        $sql_com_res=$conexion->query($sql_com);
-        if($sql_com_res -> num_rows > 0){
+        $sql="SELECT * FROM reservas where id_salida=$salida";
+        $reservasObj=$objConexion->consultar($sql);
+        if($reservasObj){
             echo'
             <div class="alert alert-warning" role="alert">
-                <i class="fa-solid fa-triangle-exclamation"></i> Esta salida tiene '.$sql_com_res -> num_rows.' reservas, por lo cual no puede eliminarla.</strong>  
+                <i class="fa-solid fa-triangle-exclamation"></i> Esta salida tiene '.count($reservasObj).' reservas, por lo cual no puede eliminarla.</strong>  
             </div> 
             <meta http-equiv="refresh" content="2;URL=salidas.php">
             ';
@@ -47,16 +48,12 @@
         else{
             //eliminar salida
             $sql="DELETE FROM salidas WHERE id_salida=$salida";
-            $res=$conexion->query($sql);
+            $objConexion->ejecutar($sql);
             //eliminar asientos de la salida
             $sql_asi="DELETE FROM asientos WHERE id_salida=$salida";
-            $res_asi=$conexion->query($sql_asi);
-            //eliminar reservas de la salida
-            $sql_reser="DELETE FROM con_pasajero WHERE id_salida=$salida";
-            $res_reser=$conexion->query($sql_reser);
+            $objConexion->ejecutar($sql_asi);
             try{
                 header("Location:salidas.php");
-                //echo "<meta http-equiv='refresh' content='1;URL=salidas.php>";
             }
             catch(Exception $e){
                 echo'Error';

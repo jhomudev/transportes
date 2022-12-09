@@ -19,28 +19,29 @@
         </thead>
         <tbody id="body-table">
         <?php
-            include "../conexion.php";
+            include_once"../conexion.php";
             $id_salida=$_GET["salida"];
-            $salida="";
+            $objConexion=new Conexion();
+            $data="";
             //$valor=;
-            $sql="SELECT c.nombres,c.apellidos,c.dni,r.id_salida,r.asiento,r.fec_emi,r.monto from con_pasajero r inner join clientes c on r.dni = c.dni where r.id_salida=$id_salida";
-            $sql_res=$conexion->query($sql);
-            if($sql_res -> num_rows > 0){
-                while($row = $sql_res->fetch_assoc()){
-                    $salida.='
+            $sql="SELECT c.nombres,c.apellidos,c.dni,r.id_salida,r.asiento,r.fec_emi,r.monto from reservas r inner join clientes c on r.dni = c.dni where r.id_salida=$id_salida";
+            $salidasObj=$objConexion->consultar($ql);
+            if($salidasObj){
+                foreach($salidasObj as $salida){
+                    $data.='
                         <tr>
-                        <td>'.$row['id_salida'].'</td>
-                        <td>'.$row['asiento'].'</td>
-                        <td>'.$row['dni'].'</td>
-                        <td>'.$row['nombres'].' '.$row['apellidos'].'</td>
-                        <td>'.$row['fec_emi'].'</td>
-                        <td> S/'.$row['monto'].'</td>
+                        <td>'.$salida['id_salida'].'</td>
+                        <td>'.$salida['asiento'].'</td>
+                        <td>'.$salida['dni'].'</td>
+                        <td>'.$salida['nombres'].' '.$salida['apellidos'].'</td>
+                        <td>'.$salida['fec_emi'].'</td>
+                        <td> S/'.$salida['monto'].'</td>
                         </tr>
                     ';
                 }
             }
             else{
-                $salida.='
+                $data.='
                 <tr>
                     <td colspan=6>
                         <div class="alert alert-warning" role="alert">
@@ -51,7 +52,7 @@
                 ';
             }
         
-            echo $salida;
+            echo $data;
         ?>
         </tbody>
     </table>

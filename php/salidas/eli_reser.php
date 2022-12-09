@@ -11,23 +11,26 @@
 <body>
 <?php
     include "../conexion.php";
-    $id_asiento=$_GET['id'];
-    $salida=$_GET['salida'];
-    $n_asiento=$_GET['n_asiento'];
+    $objConexion=new Conexion();
 
-    //eliminar resrevación
-    $sql="DELETE FROM con_pasajero WHERE id_salida=$salida AND asiento=$n_asiento";
-    $res=$conexion->query($sql);
+    $id_reserva=$_GET['id_reserva'];
+    $sql_res="SELECT * FROM reservas WHERE id_cod=$id_reserva";
+    $reserva = $objConexion->consultarOne($sql_res);
+    $id_salida=$reserva["id_salida"];
+    $n_asiento=$reserva["asiento"];
+
+    //eliminar reservación
+    $sql="DELETE FROM reservas WHERE id_cod=$id_reserva";
     //editar estado de asiento a disponible
-    $sql_edit="UPDATE asientos SET estado='DISPONIBLE' WHERE id_salida=$salida AND n_asiento=$n_asiento";
-    $res_edit=$conexion->query($sql_edit); 
+    $sql_edit="UPDATE asientos SET estado='DISPONIBLE' WHERE id_salida=$id_salida AND n_asiento=$n_asiento";
     try{
+        $deleteReserva=$objConexion->ejecutar($sql);
+        $updateAsiento=$objConexion->ejecutar($sql_edit);
         echo'   
             <div class="alert alert-success" role="alert">
             <i>Listo.</i> La reservación se eliminó. Actualize la página.
             </div> 
         ';
-
     }
     catch(Exception $e){
         echo'   

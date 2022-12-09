@@ -85,13 +85,13 @@
             <ul>
                 <li onclick="search();">TODAS</li>
                 <?php
-                    include'../conexion.php';
+                    include_once'../conexion.php';
+                    $objConexion=new Conexion();
                     $sql="SELECT * from salidas";
-                    $sql_res=$conexion->query($sql);
-                    while ($row=$sql_res->fetch_array()){
-                        $id=$row['id_salida'];
+                    $salidasObject=$objConexion->consultar($sql);
+                    foreach( $salidasObject as $salida){                 
                 ?>
-                        <li onclick="search('<?php echo $id;?>');"><?php echo $id;?></li>                      
+                    <li onclick="search('<?php echo $salida['id_salida'];?>');"><?php echo $salida['id_salida'];?></li>                      
                 <?php
                     }
                 ?>

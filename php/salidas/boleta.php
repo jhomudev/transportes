@@ -1,32 +1,33 @@
 <?php
     ob_start();
     include '../conexion.php';
-    $dni=$_GET["dni"];
-    $salida=$_GET["salida"];
-    $n_asiento=$_GET["n_asiento"];
-    $res="SELECT * FROM clientes WHERE dni=$dni";
-    $vres = $conexion->query($res);
-    if ($vres -> num_rows > 0) {
-        while ($row=$vres->fetch_array()){	
-            $nombres=$row['nombres'];
-            $apes=$row['apellidos']; 
-            $completo=$nombres.' '.$apes;
-        }
-    }
-    $fecha=date("d-m-Y");
-    $id_boleta=strtotime('now');
-    $ressa="SELECT * FROM salidas where id_salida=$salida";
-    $vressa = $conexion->query($ressa);
-    if ($vressa -> num_rows > 0) {
-        while ($row=$vressa->fetch_array()){	
-            $f=$row['fecha'];
-            $fecha_sal = date("d-m-Y", strtotime($f));
-            $hora=$row['hora']; 
-            $origen=$row['origen']; 
-            $destino=$row['destino']; 
-            $monto=$row['monto'];          
-        }
-    }
+    $objConexion=new Conexion();
+
+    $id_reserva=$_GET["id_reserva"];
+    $sql_res="SELECT * FROM reservas WHERE id_cod=$id_reserva";
+    $reserva = $objConexion->consultarOne($sql_res);
+    $dni=$reserva["dni"];
+    $id_salida=$reserva["id_salida"];
+    $n_asiento=$reserva["asiento"];
+    $fecha_boleta=date("d-m-Y", strtotime($reserva['fec_emi']));
+
+    $sql_cli="SELECT * FROM clientes WHERE dni=$dni";
+    $datos = $objConexion->consultarOne($sql_cli);
+    $nombres=$datos['nombres'];
+    $apes=$datos['apellidos']; 
+    $fullname=$nombres.' '.$apes;
+     
+    /* $fecha=date("d-m-Y");
+    $id_boleta=strtotime('now'); */
+    $ressa="SELECT * FROM salidas where id_salida=$id_salida";
+    $salida = $objConexion->consultarOne($ressa);
+    $f=$salida['fecha'];
+    $fecha_sal = date("d-m-Y", strtotime($f));
+    $hora=$salida['hora']; 
+    $origen=$salida['origen']; 
+    $destino=$salida['destino']; 
+    $monto=$salida['monto'];          
+     
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boleta_<?php echo $completo;?></title>
+    <link rel="icon" href="../ima/trans-icon.png" type="image/png" />
+    <title>Boleta_<?php echo $fullname;?></title>
     <style>
         *{
             padding: 0;margin: 0;
@@ -142,31 +144,25 @@
         <div class="boleta">
             <p>R.U.C. 20154673626 </p>
             <p>BOLETA DE VENTA </p>
-            <strong>BTVI-<?php echo $id_boleta; ?></strong>
+            <strong>BTVI-<?php echo $id_reserva; ?></strong>
         </div>
         <table class="datos-cliente">
             <tr height="25">
-                <td width="100">Dirección </td><td>:   </td>
-            </tr>
-            <tr height="25">
-                <td>Teléfono </td><td>:  </td>
-            </tr>
-            <tr height="25">
-                <td>Cliente </td><td>:&nbsp;&nbsp;  <?php echo $completo; ?></td>
+                <td>Cliente </td><td>:&nbsp;&nbsp;  <?php echo $fullname; ?></td>
             </tr>
             <tr height="25">
                 <td>DNI </td><td>:&nbsp;&nbsp;  <?php echo $dni; ?></td>
             </tr>
             <tr height="25">
-                <td>Fecha </td><td>:&nbsp;&nbsp;  <?php echo $fecha; ?></td>
+                <td>Fecha </td><td>:&nbsp;&nbsp;  <?php echo $fecha_boleta; ?></td>
             </tr>
         </table>
         <table class="detalle">
             <th colspan="2">DETALLE</th>
             <th>IMPORTE</th>
-            <tr><td>SERVICIO DE TRANPORTE DE PASAJEROS</td><td>RUTA : <?php echo $salida.' '.$origen.' / '.$destino ?></td><td class="tex-right">S/ <?php echo $monto; ?></td></tr>
+            <tr><td>SERVICIO DE TRANPORTE DE PASAJEROS</td><td>RUTA : <?php echo $id_salida.' '.$origen.' / '.$destino ?></td><td class="tex-right">S/ <?php echo $monto; ?></td></tr>
             <tr><td>FECHA DE VIAJE: <?php echo $fecha_sal; ?> </td><td>HORA: <?php echo $hora; ?> &nbsp;&nbsp;&nbsp; ASIENTO  : <?php echo $n_asiento; ?></td><td></td></tr>
-            <tr><td>PASAJERO: <?php echo $completo; ?></td><td></td><td></td></tr>
+            <tr><td>PASAJERO: <?php echo $fullname; ?></td><td></td><td></td></tr>
             <tr><td>DNI: <?php echo $dni; ?></td><td></td><td></td></tr>
             <tr><td colspan="2">EMBARQUE  :  TERMINAL DE LA CIUDAD <?php echo $origen; ?></td><td></td></tr>
             <tr><td colspan="2">DESEMBARQUE  :  TERMINAL DE LA CIUDAD <?php echo $destino; ?></td><td></td></tr>

@@ -136,10 +136,8 @@
                 <br><br>
                 <?php
                     include "../conexion.php";
-                    if(!empty($_POST['tx_salida'])=="")
-                    {}
-                    else
-                    {
+                    $objConexion=new Conexion();
+                    if($_POST){
                         $salida=$_POST["tx_salida"];
                         $origen=$_POST["tx_origen"];
                         $destino=$_POST["tx_destino"];
@@ -147,8 +145,8 @@
                         $hora=$_POST["tx_hora"];
                         $monto=$_POST["tx_monto"];
                         $sql_com="SELECT * FROM salidas where id_salida=$salida";
-                        $sql_com_res=$conexion->query($sql_com);
-                        if($sql_com_res -> num_rows > 0){
+                        $salidaObj=$objConexion->consultar($sql_com);
+                        if($salidaObj){
                             echo'
                             <div class="alert alert-warning" role="alert">
                                 <i class="fa-solid fa-triangle-exclamation"></i> Esta salida ya existe. Debe crear una con un id nuevo. De preferencia continua a las demás.</strong>  
@@ -158,12 +156,12 @@
                         else{
                             //insertar salida
                             $sql="INSERT INTO salidas VALUES($salida,'$fecha','$hora','$origen','$destino',$monto)";
-                            $sql_re=$conexion->query($sql);
+                            $objConexion->ejecutar($sql);
                             //creando asientos de la salida
                             $i=1;
                             while($i<=36){
                                 $sql="INSERT INTO asientos(id_salida,n_asiento,estado) VALUES($salida,'$i','DISPONIBLE')";
-                                $sql_re=$conexion->query($sql);
+                                $objConexion->ejecutar($sql);
                                 $i++;
                             }  
                             try{
@@ -181,7 +179,7 @@
                                 ';
                             } 
                         }
-                    }  
+                    } 
                 ?>
             </form>
         </div>
@@ -198,16 +196,16 @@
                 </tr>
             </thead>
             <?php
-                $res="Select * from salidas";
-            	$vres = $conexion->query($res);
-            	while ($row=$vres->fetch_array()){	  
-                    $ids = $row['id_salida']; 
-                    $mon = $row['monto']; 
-                    $fecha = $row['fecha']; 
-                    $hora = $row['hora']; 
-                    $origen = $row['origen']; 
-                    $destino = $row['destino']; 
-            		echo '
+                $sql="Select * from salidas";
+            	$salidasObj = $objConexion->consultar($sql);
+                foreach($salidasObj as $salida){
+                    $ids = $salida['id_salida']; 
+                    $mon = $salida['monto']; 
+                    $fecha = $salida['fecha']; 
+                    $hora = $salida['hora']; 
+                    $origen = $salida['origen']; 
+                    $destino = $salida['destino']; 
+                    echo '
                         <tr>
                             <td><a href="control.php?salida='.$ids.'">'.$ids.'</a></td>
                             <td>S/ '.$mon.'</td>
@@ -232,14 +230,6 @@
         function valide(event){
             if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
         }
-        //archivo salidas.php script para aparecer el form de agregar 
-        /* const btn_add=document.querySelector("#btn-add");
-        let form=document.querySelector("#form-add");
-        function show(){
-            form.classList.toggle('active');
-        }
-        btn_add.onclick=show; */
-        //funcion parav aparecer iframe de editar salida 
         const btn_show_iframe_edit=document.querySelector(".btn-cerrar");
         let iframe_edit=document.querySelector(".container-iframe");
         function mostrar_iframe(){

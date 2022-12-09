@@ -1,18 +1,21 @@
 <?php 
     include'../conexion.php';
-    $salida=$_GET["salida"];
-    $n_asiento=$_GET["n_asiento"];
-    $dni=$_GET["dni"];
+    $objConexion=new Conexion();
+
+    $id_reserva=$_GET["id_reserva"];
+    $var_consulta= "SELECT * FROM reservas WHERE id_cod=$id_reserva";
+    $pasajero = $objConexion->consultarOne($var_consulta);
+    $dni =$pasajero['dni'];
+    $n_asiento =$pasajero['asiento'];
+    $id_salida =$pasajero['id_salida'];
     
     //datos del pasajero
-    $var_consulta= "select * from clientes where dni=$dni";
-    $var_resultado = $conexion->query($var_consulta);
-    while ($row=$var_resultado->fetch_array())	
-    {
-        $nombres =$row['nombres'];
-        $apellidos =$row['apellidos'];
-        $sexo =$row['sexo'];
-    }
+    $var_consulta= "SELECT * FROM clientes WHERE dni=$dni";
+    $pasajero = $objConexion->consultarOne($var_consulta);
+    $nombres =$pasajero['nombres'];
+    $apellidos =$pasajero['apellidos'];
+    $sexo =$pasajero['sexo'];
+    
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -41,22 +44,19 @@
 			<div class="mb-3">
 			    <label for="codigo">Num. Salida</label>
 			    <input type="text" class="form-control" name="s1" id="s1"
-			    value='<?php echo $salida; ?>' readonly />
+			    value='<?php echo $id_salida; ?>' readonly />
 			 </div>	
 			<div class="mb-3">
 			    <label for="codigo">Asiento a reservar</label>
-			    <!-- <input type="text" class="form-control" name="s3" id="s3" onkeypress="valide(event);" maxlength="2"
-			    value=''/> -->
                 <select class="form-control"  name="tx_asiento" id="s3" required>
                     <option value="" selected disabled>Solo se muestran los asientos disponibles</option>
                     <option value="<?php echo $n_asiento; ?>">Asiento N° <?php echo $n_asiento; ?> (Asiento elegido)</option>
                     <?php
-                        //para el select de asientos
-                        $var= "select * from asientos where estado='DISPONIBLE' and id_salida=$salida";
-                        $var_r = $conexion->query($var);
-                        while ($row=$var_r->fetch_array())	
-                        {
-                            $asiento_dispo =$row['n_asiento'];
+                        //? todos los asientos disponibles de la salida
+                        $var= "SELECT * FROM asientos WHERE estado='DISPONIBLE' AND id_salida=$id_salida";
+                        $asientos = $objConexion->consultar($var);
+                        foreach ($asientos as $asiento){
+                            $asiento_dispo =$asiento['n_asiento'];
                             echo'
                                 <option value="'.$asiento_dispo.'">Asiento N°'.$asiento_dispo.'</option>
                             ';
@@ -96,20 +96,16 @@
                         <option value="F" selected="true">Femenino</option>
                         ';
                     }
-               ?>
-				   
+               ?>   
 			   </select>
 			 </div>
 		</div>
 		<hr>
-		<input  type="submit" value="GUARDAR " name="aceptar" class="btn btn-primary">
-        <a href="l_pasajeros.php?salida=<?php echo $salida; ?>" class="btn btn-danger">Cancelar</a>
+		<input type="submit" value="GUARDAR " name="aceptar" class="btn btn-primary">
+        <a href="l_pasajeros.php?salida=<?php echo $id_salida; ?>" class="btn btn-danger">Cancelar</a>
         <br><br>
         <?php 
-            if(!empty($_POST['tx_nombres'])=="")
-            {}
-            else
-            {
+            if(!empty($_POST['tx_nombres'])){
                 $dni_n=$_POST['tx_dni'];
                 $nombres_n=$_POST['tx_nombres'];
                 $apellidos_n=$_POST['tx_apellidos'];
@@ -117,20 +113,21 @@
                 $asiento_n=$_POST['tx_asiento'];
                 //actualizando datos del pasajero
                 $sql= "UPDATE clientes SET dni=$dni_n,nombres='$nombres_n',apellidos='$apellidos_n',sexo='$sexo_n' WHERE dni=$dni";
-                $sql_pro = $conexion->query($sql);
                 //actualizando estado de asiento antiguo a disponible
-                $sql_asi= "UPDATE asientos SET estado='DISPONIBLE' WHERE id_salida=$salida AND n_asiento=$n_asiento";
-                $sql_asi_pro= $conexion->query($sql_asi);
+                $sql_asi= "UPDATE asientos SET estado='DISPONIBLE' WHERE id_salida=$id_salida AND n_asiento=$n_asiento";
                 //actualizando datos de la reserva en la tabla con_pasajero
-                $sql_conp= "UPDATE con_pasajero SET asiento=$asiento_n,dni=$dni_n WHERE id_salida=$salida AND asiento=$n_asiento";
-                $sql_conp_pro= $conexion->query($sql_conp);
+                $sql_conp= "UPDATE reservas SET asiento=$asiento_n,dni=$dni_n WHERE id_salida=$id_salida AND asiento=$n_asiento";
                 //actualizando el estado del nuevo asiento a ocupado
-                $sql_ocu= "UPDATE asientos SET estado='OCUPADO' WHERE id_salida=$salida AND n_asiento=$asiento_n";
-                $sql_ocu_pro= $conexion->query($sql_ocu);
+                $sql_ocu= "UPDATE asientos SET estado='OCUPADO' WHERE id_salida=$id_salida AND n_asiento=$asiento_n";
                 try{
+                    // ejecucion de los sql
+                    $objConexion->ejecutar($sql);
+                    $objConexion->ejecutar($sql_asi);
+                    $objConexion->ejecutar($sql_ocu);
+                    $objConexion->ejecutar($sql_conp);
                     echo'   
                         <div class="alert alert-success" role="alert">
-                        <i>Listo.</i> Los datos se actualizaron correctamente. Actualize la página
+                        <i>Listo.</i> Los datos se actualizaron correctamente. Actualize la página.
                         </div> 
                     ';
                 }

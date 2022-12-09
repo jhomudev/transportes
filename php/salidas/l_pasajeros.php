@@ -108,32 +108,36 @@
             <th>ASIENTO</th>
             <th>OPCIONES</th>
             </tr>
-        </thead>        
+        </thead>    
+        <tbody>   
         <?php
             include '../conexion.php';
-            $salida=$_GET['salida'];
-            $res="Select p.dni,p.asiento,c.nombres,c.apellidos from 
-            con_pasajero p inner join clientes c on c.dni = p.dni
-            where id_salida=$salida";
-        	$vres = $conexion->query($res);
-            if ($vres -> num_rows > 0) {
-        	    while ($row=$vres->fetch_array()){	  
-                    $dni = $row['dni']; 
-                    $asiento = $row['asiento']; 
-                    $nombres = $row['nombres'].' '.$row['apellidos']; 
+            $objConexion=new Conexion();
+
+            $id_salida=$_GET['salida'];
+            $sql="SELECT r.id_cod,r.dni,r.asiento,c.nombres,c.apellidos FROM 
+            reservas r INNER JOIN clientes c ON c.dni = r.dni
+            WHERE id_salida=$id_salida";
+        	$pasajeros= $objConexion->consultar($sql);
+            if($pasajeros){
+                foreach($pasajeros as $pasajero){
+                    $id_reserva = $pasajero['id_cod']; 
+                    $dni = $pasajero['dni']; 
+                    $asiento = $pasajero['asiento']; 
+                    $nombres = $pasajero['nombres'].' '.$pasajero['apellidos']; 
         	    	echo '
                         <tr>
                             <td>'.$dni.'</td>
                             <td>'.$nombres.'</td>
                             <td>'.$asiento.'</td>
                             <td>
-                                <a class="btn btn-outline-danger" href="eli_reser.php?id=&salida='.$salida.'&n_asiento='.$asiento.'" ><i class="fa-solid fa-trash"></i></a>
-                                <a class="btn btn-outline-primary" href="edit_reser.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$asiento.'"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a class="btn btn-outline-success" target="_blank" href="boleta.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$asiento.'"><i class="fa-solid fa-ticket"></i></a>
+                                <a class="btn btn-outline-danger" href="eli_reser.php?id_reserva='.$id_reserva.'" ><i class="fa-solid fa-trash"></i></a>
+                                <a class="btn btn-outline-primary" href="edit_reser.php?id_reserva='.$id_reserva.'"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn btn-outline-success" target="_blank" href="boleta.php?id_reserva='.$id_reserva.'"><i class="fa-solid fa-ticket"></i></a>
                             </td>
                         </tr>
-                    '; 		
-                }	
+                    '; 	
+                }
             }
             else{
                 echo "
@@ -147,6 +151,7 @@
                 "; 	
             }
         ?>
+        </tbody> 
     </table>
 </body>
 </html>

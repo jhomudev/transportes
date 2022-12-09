@@ -1,3 +1,8 @@
+<?php
+    include_once '../conexion.php';
+	$id_salida=$_GET["salida"];
+    $objConexion=new Conexion();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,14 +15,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-	<?php
-        include '../conexion.php';
-		$id_salida=$_GET["salida"];
-	?>
     <!-- Body -->
     <main>
         <h2>Control de Pasajeros</h2>
-		<h3>Salida <?php echo $id_salida?></h3><hr>
+		<h3>Salida <?php echo $id_salida; ?></h3><hr>
         <table class="table table-bordered text-center">
             <thead class="table-dark">
                 <th>Origen</th>
@@ -25,24 +26,19 @@
                 <th>Fecha</th>
                 <th>Hora</th>
             </thead>
-        
         <?php
             $sql="SELECT * FROM salidas WHERE id_salida=$id_salida";
-            $res=$conexion->query($sql);
-            while ($row=$res->fetch_array()){
-                $fecha=$row['fecha'];
-                $hora=$row['hora'];
-                $origen=$row['origen'];
-                $destino=$row['destino'];
-                echo'
+            $salida=$objConexion->consultarOne($sql);
+            echo'
+                <tbody>
                     <tr>
-                        <td>'.$origen.'</td>
-                        <td>'.$destino.'</td>
-                        <td>'.$fecha.'</td>
-                        <td>'.$hora.'</td>
+                        <td>'.$salida["origen"].'</td>
+                        <td>'.$salida["destino"].'</td>
+                        <td>'.$salida["fecha"].'</td>
+                        <td>'.$salida["hora"].'</td>
                     </tr>
-                ';
-            }
+                </tbody>
+            '
         ?>
         </table>
 		<a class="btn btn-outline-info" target="iframe-pasajeros" href="l_pasajeros.php?salida=<?php echo $id_salida; ?>" onclick="mostrar_pas();">Lista de pasajeros</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -51,20 +47,19 @@
         <div id="autobus">
             <div class="right site">
                 <?php
-                    $var_consulta= "select * from asientos where id_salida=$id_salida and n_asiento<=18";
-                    $var_resultado = $conexion->query($var_consulta);
-                    while ($row=$var_resultado->fetch_array())	
-                    {
-                        $id =$row['id'];
-                        $n_asiento =$row['n_asiento'];
-                        $estado =$row['estado'];
+                    $sql= "SELECT * FROM asientos WHERE id_salida=$id_salida AND n_asiento<=18";
+                    $asientosObj=$objConexion->consultar($sql);
+                    foreach($asientosObj as $asiento){
+                        $id =$asiento['id'];
+                        $n_asiento =$asiento['n_asiento'];
+                        $estado =$asiento['estado'];
                         if($estado =='DISPONIBLE'){
                             $img_route='../../ima/lib.jpg';
                         }
                         elseif($estado =='OCUPADO'){
                             $img_route='../../ima/ocu.jpg';
                         }
-                        ?>
+                ?>
                         <a href="reservar.php?id=<?php echo $id; ?>&asiento=<?php echo $n_asiento; ?>&salida=<?php echo $id_salida; ?>&estado=<?php echo $estado;?>" onclick="mostrar_res();" class="asiento" target="iframe" style="--number:'A.N°<?php echo $n_asiento; ?>'"><img src="<?php echo $img_route; ?>"></a>
                 <?php
                     }
@@ -72,33 +67,35 @@
                 
             </div>
             <div class="left site">
-            <?php
-                    $var_consulta= "select * from asientos where id_salida=$id_salida and n_asiento>18";
-                    $var_resultado = $conexion->query($var_consulta);
-                    while ($row=$var_resultado->fetch_array())	
-                    {
-                        $id =$row['id'];
-                        $n_asiento =$row['n_asiento'];
-                        $estado =$row['estado'];
+                <?php
+                    $sql= "SELECT * FROM asientos WHERE id_salida=$id_salida AND n_asiento>18";
+                    $asientosObj=$objConexion->consultar($sql);
+                    foreach($asientosObj as $asiento){
+                        $id =$asiento['id'];
+                        $n_asiento =$asiento['n_asiento'];
+                        $estado =$asiento['estado'];
                         if($estado =='DISPONIBLE'){
                             $img_route='../../ima/lib.jpg';
                         }
                         elseif($estado =='OCUPADO'){
                             $img_route='../../ima/ocu.jpg';
                         }
-                        ?>
+                ?>
                         <a href="reservar.php?id=<?php echo $id; ?>&asiento=<?php echo $n_asiento; ?>&salida=<?php echo $id_salida; ?>&estado=<?php echo $estado;?>" onclick="mostrar_res();" class="asiento" target="iframe" style="--number:'A.N°<?php echo $n_asiento; ?>'"><img src="<?php echo $img_route; ?>"></a>
                 <?php
                     }
                 ?>
-                
             </div>
             	
         </div>
-<!--         <div id="btn-cerrar-pasa" onclick="cerrar_res()"><i class="fa-solid fa-xmark"></i></div>
- -->        <iframe src="" name="iframe" id="iframe-res" frameborder="0"></iframe>
-        <div id="btn-cerrar" onclick="mostrar_pas();"><i class="fa-solid fa-xmark"></i></div>
-        <iframe src="" name="iframe-pasajeros" id="iframe-pasajeros" frameborder="0"></iframe>
+        <div class="iframeBox" id="iframe_res">
+            <div class="btn-cerrar res" onclick="cerrar_res();"><i class="fa-solid fa-arrow-right"></i></div>
+            <iframe src="" name="iframe" frameborder="0"></iframe>
+        </div>        
+        <div class="iframeBox" id="iframe_pasajeros">
+            <div class="btn-cerrar pas" onclick="mostrar_pas();"><i class="fa-solid fa-xmark"></i></div>
+            <iframe src="" name="iframe-pasajeros" frameborder="0"></iframe>
+        </div>
     </main>
     <script src="../../js/script.js"></script>
 </body>

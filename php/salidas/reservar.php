@@ -23,36 +23,36 @@
 </head>
 <body>		
 <?php 	
-	include '../conexion.php';
-	$salida=$_GET['salida'];
+	include_once '../conexion.php';
+	$objConexion=new conexion();
+
+	$id_salida=$_GET['salida'];
 	$estado=$_GET["estado"];	
 	$id_asiento=$_GET["id"];
 	$n_asiento=$_GET["asiento"];
-	$var_consulta= "select * from salidas where id_salida=$salida";
-    $var_resultado = $conexion->query($var_consulta);
-	while ($row=$var_resultado->fetch_array()){	
-		$monto = $row['monto'];
-	}
+	
+	$sql= "SELECT * FROM salidas WHERE id_salida=$id_salida";
+   $salida=$objConexion->consultarOne($sql);
+	$monto=$salida['monto'];
 	
 	if ($estado=='OCUPADO') { 
+		$var_consulta= "SELECT r.id_cod,r.dni,r.monto,c.nombres,c.apellidos FROM reservas r
+		INNER JOIN clientes c ON r.dni=c.dni
+		WHERE r.asiento=$n_asiento AND r.id_salida=$id_salida";
+    	$reserva=$objConexion->consultarOne($var_consulta);
+		// TABLA CONLOS DATOS DE LA RESERVA
+		$dni = $reserva['dni'];
+		$nombres = $reserva['nombres'];
+		$apellidos = $reserva['apellidos'];
+		$id_reserva = $reserva['id_cod'];
 		echo '
 			<div class="alert alert-warning" role="alert">
-  				<i>Asiento reservado.</i> Este asiento ya tiene propietario.
+				<i>Asiento reservado.</i> Este asiento ya tiene propietario.
 			</div> 
 			<hr>
 			<table class="table table-bordered text-center">
-		'; 
-		$var_consulta= "select cp.dni,c.nombres,c.apellidos from con_pasajero cp
-		INNER JOIN clientes c ON cp.dni=c.dni
-		where asiento=$n_asiento and id_salida=$salida";
-    	$var_resultado = $conexion->query($var_consulta);
-		while ($row=$var_resultado->fetch_array()){
-			$dni = $row['dni'];
-			$nombres = $row['nombres'];
-			$apellidos = $row['apellidos'];
-			echo'
 				<tr>
-					<td class="bg-info text-light">N° Salida</td><td>'.$salida.'</td>
+					<td class="bg-info text-light">N° Salida</td><td>'.$id_salida.'</td>
 				</tr>
 				<tr>
 					<td class="bg-info text-light">N° Asiento</td><td>'.$n_asiento.'</td>
@@ -67,25 +67,23 @@
 					<td class="bg-info text-light">Monto a Pagar</td><td>S/ '.$monto.'</td>
 				</tr>
 			</table>
-			&nbsp;&nbsp;<a class="btn btn-danger" href="eli_reser.php?id='.$id_asiento.'&salida='.$salida.'&n_asiento='.$n_asiento.'"><i class="fa-solid fa-trash-can"></i> Eliminar</a>
-			<a class="btn btn-info" href="edit_reser.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$n_asiento.'"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-			<a class="btn btn-success" target="_blank" href="boleta.php?dni='.$dni.'&salida='.$salida.'&n_asiento='.$n_asiento.'"><i class="fa-solid fa-ticket"></i> Boleta</a>
-			';
-		} 
+			&nbsp;&nbsp;<a class="btn btn-danger" href="eli_reser.php?id_reserva='.$id_reserva.'"><i class="fa-solid fa-trash-can"></i> Eliminar</a>
+			<a class="btn btn-info" href="edit_reser.php?id_reserva='.$id_reserva.'"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+			<a class="btn btn-success" target="_blank" href="boleta.php?id_reserva='.$id_reserva.'"><i class="fa-solid fa-ticket"></i> Boleta</a>
+		';
+		
 	}
-	else { 
-		echo '
-			<div class="alert alert-success" role="alert">
-				<i>Asiento Libre.</i> Puede reservarlo
-	    	</div>
-		';				
+	else { 			
 ?> 
+		<div class="alert alert-success" role="alert">
+			<i>Asiento Libre.</i> Puede reservarlo
+		</div>
 		<form method="post" name="form2" id="form2" action="#">
 			<div class="form-row">
 				 <div class="mb-3">
 				   <label for="codigo">Num. Salida</label>
 				   <input type="text" class="form-control" name="s1" id="s1"
-				   value='<?php echo $salida; ?>' readonly />
+				   value='<?php echo $id_salida; ?>' readonly />
 				 </div>	
 				 <div class="mb-3">
 				   <label for="codigo">Monto a Pagar</label>
@@ -124,9 +122,7 @@
 			<input  type="submit" value="GUARDAR " name="aceptar" class="btn btn-primary">
 			<br><br>
 			<?php 
-				if(!empty($_POST['tx_nombres'])=="")
-    			{}
-    			else
+				if(!empty($_POST['tx_nombres']))
 				{
 					$id_cod=strtotime('now');
 					$dni=$_POST['tx_dni'];
@@ -135,22 +131,20 @@
 					$sexo=$_POST['tx_sexo'];
 					$fecha= date("y-m-d");
 					//insertar cliente si aun no existe
-					$sql_prod ="SELECT * FROM clientes where dni=$dni";  
-    				$result_prod = $conexion -> query($sql_prod);
-    				if ($result_prod -> num_rows > 0) {
-					}
-					else{
-						$consulta="insert into clientes values($dni,'$nombres','$apellidos','$sexo')";
-						$resultado= $conexion -> query($consulta);	
+					$sql_prod ="SELECT * FROM clientes WHERE dni=$dni";  
+    				$cliente=$objConexion->consultarOne($sql_prod);
+    				if (!$cliente) {
+						$consulta="INSERT INTO clientes VALUES($dni,'$nombres','$apellidos','$sexo')";
+						$objConexion -> ejecutar($consulta);	
 					}
 					//insertar la reserva en tabla con_pasajero
-					$var_consulta="insert into con_pasajero(id_cod,id_salida,asiento,dni,fec_emi,monto) 
-					values ('$id_cod','$salida','$n_asiento','$dni','$fecha','$monto')";
-					$result= $conexion -> query($var_consulta);
+					$var_consulta="INSERT INTO reservas(id_cod,id_salida,asiento,dni,fec_emi,monto) 
+					VALUES ('$id_cod','$id_salida','$n_asiento','$dni','$fecha','$monto')";
+					$objConexion -> ejecutar($var_consulta);
 
 					//actualizacion de asiento libre a ocupado
-					$insert=("update asientos set estado='OCUPADO' where id=$id_asiento");
-					if($registros=$conexion -> query($insert))	{
+					$sql_insert=("UPDATE asientos SET estado='OCUPADO' WHERE id=$id_asiento");
+					if($objConexion -> ejecutar($sql_insert))	{
 						echo'
 							<div class="alert alert-success" role="alert">
 							<i>Asiento reservado correctamente. Actualize la página.</i>
