@@ -16,6 +16,7 @@
 </head>
 <body>
     <!-- Body -->
+    <a href="salidas.php" title="Atras" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left"></i></a>
     <main>
         <h2>Control de Pasajeros</h2>
 		<h3>Salida <?php echo $id_salida; ?></h3><hr>
@@ -42,8 +43,7 @@
         ?>
         </table>
 		<a class="btn btn-outline-info" target="iframe-pasajeros" href="l_pasajeros.php?salida=<?php echo $id_salida; ?>" onclick="mostrar_pas();">Lista de pasajeros</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-outline-primary" href="control.php?salida=<?php echo $id_salida; ?>">Actualizar</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="salidas.php" class="btn btn-outline-secondary">Atras</a><hr>
+        <a class="btn btn-outline-primary" href="control.php?salida=<?php echo $id_salida; ?>">Actualizar</a><hr>
         <div id="autobus">
             <div class="right site">
                 <?php

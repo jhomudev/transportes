@@ -186,12 +186,11 @@
         <table class="table table-striped text-center">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">ID SALIDA</th>
+                    <th scope="col">ORIGEN</th>
+                    <th scope="col">DESTINO</th>
                     <th scope="col">MONTO</th>
                     <th scope="col">FECHA</th>
                     <th scope="col">HORA</th>
-                    <th scope="col">ORIGEN</th>
-                    <th scope="col">DESTINO</th>
                     <th scope="col">OPCIONES</th>
                 </tr>
             </thead>
@@ -207,15 +206,15 @@
                     $destino = $salida['destino']; 
                     echo '
                         <tr>
-                            <td><a href="control.php?salida='.$ids.'">'.$ids.'</a></td>
+                            <td>'.$origen.'</td>
+                            <td>'.$destino.'</td>
                             <td>S/ '.$mon.'</td>
                             <td>'.$fecha.'</td>
                             <td>'.$hora.'</td>
-                            <td>'.$origen.'</td>
-                            <td>'.$destino.'</td>
                             <td>
-                                <a href="eli_salida.php?salida='.$ids.'" class="btn btn-danger" title="Eliminar salida"><i class="fa-solid fa-trash"></i></a>
-                                <a target="iframe-edit" onclick="mostrar_iframe();" href="edit_salida.php?salida='.$ids.'" class="btn btn-primary" title="Editar salida"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="control.php?salida='.$ids.'" class="btn btn-success" title="Administrar"><i class="fa-solid fa-share-from-square"></i></a>
+                            <a href="eli_salida.php?salida='.$ids.'" class="btn btn-danger" title="Eliminar salida"><i class="fa-solid fa-trash"></i></a>
+                            <a target="iframe-edit" onclick="mostrar_iframe();" href="edit_salida.php?salida='.$ids.'" class="btn btn-primary" title="Editar salida"><i class="fa-solid fa-pen-to-square"></i></a>
                             </td>
                         </tr>
                     '; 		
