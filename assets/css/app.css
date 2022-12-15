@@ -125,15 +125,4 @@ body{
     overflow: hidden;
     display:none;
 }
-iframe.vista{
-    position: relative;
-    width: 100%;
-}
-@media screen and (max-width: 780px) {
-    *{
-        font-size:10px;
-    }
-    .menu .logo{
-        margin: 30% auto 1px;
-    }
-}
+

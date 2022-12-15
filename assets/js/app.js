@@ -1,3 +1,16 @@
+// funcion ocultar barra menu en panel de admin
+const btn = document.querySelector(".menu__iconBar");
+let menu = document.querySelector(".menu");
+let opcion_title = document.querySelectorAll(".menu__linkText");
+function hide() {
+   //poniendo la clase
+   menu.classList.toggle("hide");
+   btn.classList.toggle("center");
+   opcion_title.forEach((item) => item.classList.toggle("hide"));
+}
+btn.addEventListener("click", hide);
+
+
 //funcion que valida solo entrada de numeros
 function valide(event){
     if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;
