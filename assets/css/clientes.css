@@ -14,44 +14,28 @@
 .main{
    width: 100%;
    padding: 1em;
-   display:grid;
-   grid-template-columns: minmax(300px,370px) minmax(550px,1fr);
-   grid-auto-rows: 500px;
-   grid-gap: 3em;
 }
-.form{
+.search{
    width: 100%;
-   padding:25px;
-   border-radius: 5px;
-   background: var(--color-light);
-   grid-column: auto;
+   max-width: 700px;
+   padding: 0 10px;
+   border-radius: 4px 4px 0  0;
    display: flex;
-   flex-direction: column;
-   gap: 1em;
+   align-items: center;
+   background: var(--color-light);
+   box-shadow: -5px -5px 5px var(--color-gray);
 }
-.form h3{
-   text-align: center;
-}
-.form__group label{
-   display: block;
-   font-size: small;
-}
-.form__control{
+.search__control{
    width: 100%;
-   padding: 5px 10px;
-   outline: none;
-   border: 1px solid  var(--color-light-green);
-   border-radius: 3px;
-   font-size: smaller;
-   text-transform: uppercase;
-}
-.form__button{
-   padding: 8px;
-   background: var(--color-cyan);
-   color: white;
+   height: 100%;
+   padding:10px 15px;
    border: none;
-   border-radius: 3px;
-   cursor: pointer;
+   outline: none;
+   font-size: medium;
+   font-family: var(--font-ubuntu);
+}
+.search i{
+   color:var(--color-light-gray);
 }
 .tableBox{
    grid-column: auto;
@@ -91,16 +75,18 @@
    font-size: larger;
    cursor: pointer;
 }
+.empty{
+   width: 100%;
+   place-items:center;
+   text-transform:none;
+   font-family: var(--font-ubuntu);
+}
+.empty p{
+   font-family: inherit;
+}
+
 @media screen and (max-width: 1280px){
-   .main{
-      grid-template-columns: 1fr;
-      grid-gap: 1em;
-   }
    .title{
       margin: 0;
-   }
-   .form{
-      max-width: 430px;
-      margin: 0 auto;
    }
 }

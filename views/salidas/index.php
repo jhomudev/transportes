@@ -5,8 +5,9 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-      <link rel="shortcut icon" href="../../assets/img/logo.png" type="image/x-icon">
-      <link rel="stylesheet" href="./../../assets/css/salidas.css">
+      <link rel="shortcut icon" href="http://localhost/transportes/assets/img/logo.png" type="image/x-icon">
+      <link rel="stylesheet" href="http://localhost/transportes/assets/css/salidas.css">
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <title>SystemTransport</title>
    </head>
    <body>
@@ -15,7 +16,7 @@
          <div class="view">
             <h1 class="title">Gestión de Salidas</h1>
             <main class="main">         
-               <form class="form" id="form-add" >
+               <form class="form" id="form_add" >
                   <h3>Agregar Salidas</h3>
                   <div class="form__group">
                      <label for="codigo">Origen</label>
@@ -63,7 +64,7 @@
                         required
                      />
                   </div>
-                  <input type="submit" value="Agregar" class="form__button" />
+                  <input type="submit" value="Agregar" id="btnRegistrar" class="form__button" />
                </form>
                <div class="tableBox">
                   <table class="table">
@@ -71,32 +72,20 @@
                         <tr>
                            <th scope="col">ORIGEN</th>
                            <th scope="col">DESTINO</th>
-                           <th scope="col">MONTO</th>
                            <th scope="col">FECHA</th>
                            <th scope="col">HORA</th>
+                           <th scope="col">MONTO</th>
                            <th scope="col">OPCIONES</th>
                         </tr>
                      </thead>
-                     <tbody class="table__tbody">
-                        <tr>
-                           <td>ffff</td>
-                           <td>ffff</td>
-                           <td>ffff</td>
-                           <td>ffff</td>
-                           <td>ffff</td>
-                           <td>
-                              <button class="table_btn" style="--clr:#67e669;" title="Administrar"><i class="uil uil-user-check"></i></button>
-                              <button class="table_btn" style="--clr:#4f8dd5;" title="Editar"><i class="uil uil-edit"></i></button>
-                              <button class="table_btn" style="--clr:#f7616d;" title="Eliminar"><i class="uil uil-trash-alt"></i></button>
-                           </td>
-                        </tr>                   
-                        
+                     <tbody class="table__tbody" id="table_list">
                      </tbody>
                   </table>
                </div>
             </main>
          </div>
       </div>
-      <script src="../../assets/js/app.js"></script>
+      <script src="http://localhost/transportes/assets/js/app.js"></script>
+      <script src="script.js"></script>
    </body>
 </html>

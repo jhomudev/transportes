@@ -6,7 +6,8 @@
       --color-cyan:#159A9C;
       --color-light:#FFFFFF;
       --color-light-green:#DEEFE7;
-      --color-grey:#B4BEC9;
+      --color-gray:#e4efff;
+      --color-light-gray:#d6e2ef;
       --font-poppins:'Poppins', sans-serif;
       --font-ubuntu:'Ubuntu', sans-serif;;
    }
@@ -20,6 +21,7 @@
       width: 100%;
       height: 100vh;
       display: flex;
+      overflow:hidden;
    }
    .menu {
       position: relative;
