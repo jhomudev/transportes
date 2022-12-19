@@ -20,11 +20,12 @@
                   <h3>Agregar Salidas</h3>
                   <div class="form__group">
                      <label for="codigo">Origen</label>
+                     <input type="hidden" name="id_salida" id="id_salida"/>
                      <input
                         type="text"
                         class="form__control"
                         name="tx_origen"
-                        required
+                        id="origen" required
                      />
                   </div>
                   <div class="form__group">
@@ -33,7 +34,7 @@
                         type="text"
                         class="form__control"
                         name="tx_destino"
-                        required
+                        id="destino" required
                      />
                   </div>
                   <div class="form__group">
@@ -42,7 +43,7 @@
                         type="date"
                         class="form__control"
                         name="tx_fecha"
-                        required
+                        id="fecha" required
                      />
                   </div>
                   <div class="form__group">
@@ -51,7 +52,7 @@
                         type="time"
                         class="form__control"
                         name="tx_hora"
-                        required
+                        id="hora" required
                      />
                   </div>
                   <div class="form__group">
@@ -60,8 +61,7 @@
                         type="text"
                         class="form__control"
                         name="tx_monto"
-                        id="s3"
-                        required
+                        id="monto" required
                      />
                   </div>
                   <input type="submit" value="Agregar" id="btnRegistrar" class="form__button" />

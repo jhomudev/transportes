@@ -4,9 +4,9 @@
       $objConexion=new Conexion();
 
       $sql="SELECT * FROM clientes";
-      if(isset($_POST['keywords'])){
+      if(($_POST['keywords']!=="")){
          $keywords=$_POST["keywords"];
-         $sql="SELECT * FROM clientes WHERE CONCAT(nombres,' ', apellidos) LIKE '%$keywords%'";
+         $sql="SELECT * FROM clientes WHERE CONCAT(nombres,' ', apellidos) LIKE '%$keywords%' OR dni LIKE '%$keywords%'";
       }
       $clientes=$objConexion->consultar($sql);
       $data="";
@@ -17,7 +17,7 @@
                <td>'.$cliente["dni"].'</td>
                <td>'.$cliente["nombres"].'</td>
                <td>'.$cliente["apellidos"].'</td>
-               <td>'.$cliente["sexo"].'</td>
+               <td>'.$cliente["telefono"].'</td>
             </tr> 
             ';
          }

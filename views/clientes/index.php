@@ -28,7 +28,7 @@
                            <th scope="col">DNI</th>
                            <th scope="col">NOMBRES</th>
                            <th scope="col">APELLIDOS</th>
-                           <th scope="col">SEXO</th>
+                           <th scope="col">TELÉFONO</th>
                         </tr>
                      </thead>
                      <tbody class="table__tbody" id="table_list">

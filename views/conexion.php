@@ -2,7 +2,7 @@
     class conexion{
         private $server="localhost";
         private $user="root";
-        private $db="trans_ajax";
+        private $db="trans_fetch";
         private $password="";
         private $conexion;
 
