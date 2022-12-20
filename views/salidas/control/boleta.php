@@ -1,15 +1,17 @@
 <?php
     ob_start();
-    include '../conexion.php';
+    require "../../conexion.php";
     $objConexion=new Conexion();
 
     $id_reserva=$_GET["id_reserva"];
-    $sql_res="SELECT * FROM reservas WHERE id_cod=$id_reserva";
+    $id_salida=$_GET["id_salida"];
+
+    $sql_res="SELECT * FROM reservas WHERE id=$id_reserva";
     $reserva = $objConexion->consultarOne($sql_res);
     $dni=$reserva["dni"];
-    $id_salida=$reserva["id_salida"];
     $n_asiento=$reserva["asiento"];
-    $fecha_boleta=date("d-m-Y", strtotime($reserva['fec_emi']));
+    $total=$reserva["total"];
+    $fecha_boleta=date("d-m-Y", strtotime($reserva['fecha_emi']));
 
     $sql_cli="SELECT * FROM clientes WHERE dni=$dni";
     $datos = $objConexion->consultarOne($sql_cli);
@@ -17,9 +19,7 @@
     $apes=$datos['apellidos']; 
     $fullname=$nombres.' '.$apes;
      
-    /* $fecha=date("d-m-Y");
-    $id_boleta=strtotime('now'); */
-    $ressa="SELECT * FROM salidas where id_salida=$id_salida";
+    $ressa="SELECT * FROM salidas where id=$id_salida";
     $salida = $objConexion->consultarOne($ressa);
     $f=$salida['fecha'];
     $fecha_sal = date("d-m-Y", strtotime($f));
@@ -35,7 +35,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../ima/trans-icon.png" type="image/png" />
+    <link rel="shortcut icon" href="http://localhost/transportes/assets/img/logo.png" type="image/x-icon">
     <title>Boleta_<?php echo $fullname;?></title>
     <style>
         *{
@@ -82,11 +82,13 @@
         table.datos-cliente{
             margin: 20px 0;
             font-size: 15px;
+            text-transform: uppercase;
         }
         table.detalle{
             width: 100%;
             font-size:13px;
             border-collapse: collapse;
+            text-transform: uppercase;
         }
         table.detalle th{
             padding: 7px 20px;
@@ -138,13 +140,13 @@
 <body>
     <div class="hoja">
         <div class="empresa">
-            <img src="../../ima/trans-icon.png" alt="">
+            <img src="http://localhost/transportes/assets/img/logo.png" alt="logo">
             <h1>EMPRESA DE TRANSPORTE CARGO TRANSPORT S.A.</h1>
         </div>
         <div class="boleta">
             <p>R.U.C. 20154673626 </p>
             <p>BOLETA DE VENTA </p>
-            <strong>BTVI-<?php echo $id_reserva; ?></strong>
+            <strong>BTVI-0000<?php echo $id_reserva; ?></strong>
         </div>
         <table class="datos-cliente">
             <tr height="25">
@@ -175,8 +177,8 @@
             <table class="paga">
                 <tr><td class="t-impo"><strong>SUBTOTAL</strong> </td><td class="impo tex-right">  S/ <?php echo $monto; ?></td></tr>
                 <tr><td class="t-impo"><strong>DESCUENTO</strong> </td><td class="impo tex-right">  S/ 0.00</td></tr>
-                <tr><td class="t-impo"><strong>IGV 18%</strong>     </td><td class="impo tex-right"> S/ <?php echo round(($monto*0.18),2); ?></td></tr>
-                <tr><td class="t-impo"><strong>IMPORTE TOTAL</strong></td><td class="impo tex-right"> S/ <?php echo round($monto+($monto*0.18),2); ?></td></tr>
+                <tr><td class="t-impo"><strong>IGV 18%</strong>     </td><td class="impo tex-right"> S/ <?php echo ($monto*0.18); ?></td></tr>
+                <tr><td class="t-impo"><strong>IMPORTE TOTAL</strong></td><td class="impo tex-right"> S/ <?php echo $total; ?></td></tr>
             </table>
         </div>
         <footer>

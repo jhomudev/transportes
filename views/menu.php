@@ -25,7 +25,7 @@
    }
    .menu {
       position: relative;
-      width: 13em;
+      width: 175px;
       padding: 5px;
       background: var(--color-main);
       transition: all 0.3s;
@@ -36,7 +36,7 @@
       justify-self: start;
    }
    .menu.hide {
-      width: 4em;
+      width: 52px;
    }
    .menu__iconBar{
       position: relative;

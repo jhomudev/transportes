@@ -83,30 +83,42 @@ function submitForm(event) {
 }
 // ACCIONES
 function deleteR(idR) {
-   fetch("delete_r.php", {
-      method: "POST",
-      body: new URLSearchParams(`id=${idR}`),
-   })
-      .then((r) => r.text())
-      .then((r) => {
-         if (r == "ok") {
-            hideModal();
-            bus.focus();
-            getAllSeats();
-            Swal.fire({
-               position: "center",
-               icon: "success",
-               title: "Reserva eliminada exitosamente",
-               showConfirmButton: false,
-               timer: 1500,
+   Swal.fire({
+      title: "Estás seguro de eliminar esta reserva?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí",
+      cancelButtonText: "No",
+   }).then((result) => {
+      if (result.isConfirmed) {
+         fetch("delete_r.php", {
+            method: "POST",
+            body: new URLSearchParams(`id=${idR}`),
+         })
+            .then((r) => r.text())
+            .then((r) => {
+               if (r == "ok") {
+                  hideModal();
+                  bus.focus();
+                  getAllSeats();
+                  Swal.fire({
+                     position: "center",
+                     icon: "success",
+                     title: "Reserva eliminada exitosamente",
+                     showConfirmButton: false,
+                     timer: 1500,
+                  });
+               } else {
+                  console.log(r);
+                  Swal.fire({
+                     icon: "error",
+                     title: "Oops...",
+                     text: "Al parecer ocurrióun error!",
+                  });
+               }
             });
-         } else {
-            console.log(r);
-            Swal.fire({
-               icon: "error",
-               title: "Oops...",
-               text: "Al parecer ocurrióun error!",
-            });
-         }
-      });
+      }
+   });
 }

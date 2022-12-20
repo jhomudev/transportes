@@ -100,7 +100,7 @@
    transition: all .3s;
 }
 .modalInfo.hidden{
-   right: -50%;
+   right: -100%;
 }
 .modalInfo__Box{
    position: sticky;

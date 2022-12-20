@@ -14,6 +14,9 @@
       $sql_salida="SELECT * FROM salidas WHERE cod=".$asiento['cod_salida']."";
       $salida=$objConexion->consultarOne($sql_salida);
 
+      $igv=(18/100)*$salida["monto"];
+      $total=$salida["monto"]+$igv;
+
       if($asiento["isAvailable"]==0){
 ?>
          <div class="alert alert_libre">Asiento disponible</div>
@@ -90,7 +93,7 @@
                   class="form__control"
                   name="tx_monto"
                   id="monto"
-                  value="S/ <?php echo $salida["monto"] ?>"
+                  value="S/ <?php echo $total ?>"
                   disabled
                />
             </div>
@@ -122,14 +125,14 @@
                </tr>
                <tr>
                   <th>Monto</th>
-                  <td>S/ <?php echo $salida["monto"]; ?></td>
+                  <td>S/ <?php echo $total; ?></td>
                </tr>
             </tbody>
          </table>
          <div class="modalInfo__buttons">
             <button class="modalInfo__buttonAction" style="--clr:#4f8dd5;" onclick="editR('<?php echo $reserva['id']; ?>');" id="btn_editReserva">Editar reserva</button>
             <button class="modalInfo__buttonAction" style="--clr:#f7616d;" onclick="deleteR('<?php echo $reserva['id']; ?>');" id="btn_deleteReserva">Eliminar reserva</button>
-            <a href="" class="modalInfo__buttonAction" style="--clr:#67e669;">Imprimir boleta</a>
+            <a href="boleta.php?id_reserva=<?php echo $reserva["id"]?>&id_salida=<?php echo $salida["id"]?>" target="_blank" class="modalInfo__buttonAction" style="--clr:#67e669;">Imprimir boleta</a>
          </div>
 <?php 
       }
