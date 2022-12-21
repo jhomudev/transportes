@@ -42,6 +42,7 @@ btnRegistrar.addEventListener("click", (e) => {
                   timer: 1500,
                });
                btnRegistrar.value = "Agregar";
+               title_action.innerHTML = "Agregar Salida";
             }
             form_add.reset();
             mostrar_data();
@@ -75,6 +76,19 @@ function eliminar(id) {
                      showConfirmButton: false,
                      timer: 1500,
                   });
+               } else if(r=="cannot") {
+                  Swal.fire({
+                     icon: "error",
+                     title: "No se pudo eliminar la salida",
+                     text: "La salida tiene reservas, por lo cual no se puede eliminar",
+                  });
+               } else {
+                  Swal.fire({
+                     icon: "error",
+                     title: "Oops...",
+                     text: "Ocurrió un error!",
+                  });
+                  console.log(r);
                }
             });
       }
@@ -96,6 +110,7 @@ function editar(id) {
          hora.value = r.hora;
          monto.value = r.monto;
          btnRegistrar.value = "Actualizar";
+         title_action.innerHTML = "Modificar Salida";
       });
 }
 

@@ -2,15 +2,21 @@
    if(isset($_POST)){
       require "./../conexion.php";
       $objConexion=new Conexion();
-      $sql="SELECT * FROM salidas";
+      $sql="SELECT * FROM salidas ORDER BY fecha ASC";
       $salidas=$objConexion->consultar($sql);
       $data="";
+      date_default_timezone_set('America/Lima');
+      $fechaNow=date("Y-m-d");
       foreach($salidas as $salida){
+         if($fechaNow>$salida["fecha"]) $estadoS=["paso","Salida pasada"];
+         else if($fechaNow==$salida["fecha"]) $estadoS=["en_curso","Salida en curso hoy"];
+         else $estadoS=["pendiente","Salida pendiente"];
+
          $data.='
-         <tr>
+         <tr state="'.$estadoS[0].'" title="'.$estadoS[1].'">
             <td>'.$salida["origen"].'</td>
             <td>'.$salida["destino"].'</td>
-            <td>'.$salida["fecha"].'</td>
+            <td>'.date("d-m-Y", strtotime($salida["fecha"])).'</td>
             <td>'.$salida["hora"].'</td>
             <td>S/ '.$salida["monto"].'</td>
             <td>

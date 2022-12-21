@@ -73,10 +73,13 @@
    height: 2.5em;
 }
 .table__tbody tr{
-   background: var(--color-light-gray);
-}
-.table__tbody tr:nth-child(even){
    background: var(--color-light);
+}
+.table__tbody tr[state="paso"]{
+   background: #ffbbbb;
+}
+.table__tbody tr[state="en_curso"]{
+   background: #eaebab;
 }
 .table__tbody td{
    padding: 1em 0 !important;

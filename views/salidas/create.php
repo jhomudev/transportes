@@ -1,5 +1,6 @@
 <?php 
    if(isset($_POST)){
+      date_default_timezone_set('America/Lima');
       $origen=$_POST["tx_origen"];
       $destino=$_POST["tx_destino"];
       $fecha=$_POST["tx_fecha"];

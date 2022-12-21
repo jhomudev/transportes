@@ -17,7 +17,7 @@
             <h1 class="title">Gestión de Salidas</h1>
             <main class="main">         
                <form class="form" id="form_add" >
-                  <h3>Agregar Salidas</h3>
+                  <h3 id="title_action">Agregar Salida</h3>
                   <div class="form__group">
                      <label for="codigo">Origen</label>
                      <input type="hidden" name="id_salida" id="id_salida"/>
@@ -61,7 +61,9 @@
                         type="text"
                         class="form__control"
                         name="tx_monto"
-                        id="monto" required
+                        id="monto"
+                        onkeypress="return soloPrecio(event);"
+                        required
                      />
                   </div>
                   <input type="submit" value="Agregar" id="btnRegistrar" class="form__button" />

@@ -7,6 +7,8 @@ function hideModal() {
    modalInfo.classList.add("hidden");
 }
 function showList() {
+   getListP();
+   hideModal();
    pasajerosBox.classList.toggle("hidden");
    btnshowList.classList.toggle("hidden");
 }
@@ -51,7 +53,21 @@ function getInfoSeat(idSeat) {
          modalInfo__info.innerHTML = r;
       });
 }
-// envio del formulario con onsubmit en el form
+function getListP() {
+   //Obtnego el id de la salida en la url
+   const urlParams = new URLSearchParams(window.location.search);
+   let idS = urlParams.get('id');
+   fetch("readListp.php", {
+      method: "POST",
+      body: new URLSearchParams(`id=${idS}`),
+   })
+      .then((r) => r.text())
+      .then((r) => {
+         pasajeros__table__tbody.innerHTML = r;
+      });
+}
+
+// envio del formulario con onsubmit en el form RESERVAR ASIENTO
 function submitForm(event) {
    event.preventDefault();
    console.log("submit");
@@ -76,12 +92,28 @@ function submitForm(event) {
                showConfirmButton: false,
                timer: 1500,
             });
+         } else if (r == "ok_m") {
+            getAllSeats();
+            pasajerosBox.classList.add("hidden");
+            btnshowList.classList.remove("hidden");
+            Swal.fire({
+               position: "center",
+               icon: "success",
+               title: "Reserva modificada exitosamente",
+               showConfirmButton: false,
+               timer: 1500,
+            });
          } else {
+            Swal.fire({
+               icon: "error",
+               title: "Oops...",
+               text: "Ocurrió un error!",
+            });
             console.log(r);
          }
       });
 }
-// ACCIONES
+// ACCIONES DE RESERVAS
 function deleteR(idR) {
    Swal.fire({
       title: "Estás seguro de eliminar esta reserva?",
@@ -103,6 +135,7 @@ function deleteR(idR) {
                   hideModal();
                   bus.focus();
                   getAllSeats();
+                  getListP();
                   Swal.fire({
                      position: "center",
                      icon: "success",
@@ -121,4 +154,20 @@ function deleteR(idR) {
             });
       }
    });
+}
+
+function editR(idR) {
+   showModal();
+   fetch("edit_r.php", {
+      method: "POST",
+      body: new URLSearchParams(`id=${idR}`),
+   })
+      .then((r) => r.text())
+      .then((r) => {
+         modalInfo__info.innerHTML = r;
+      });
+}
+// redireccionar a boleta.php
+function boleta(idR,idS) {
+   window.open(`boleta.php?id_reserva=${idR}&id_salida=${idS}`,"_blank");
 }

@@ -5,24 +5,21 @@
 
     $id_reserva=$_GET["id_reserva"];
     $id_salida=$_GET["id_salida"];
-
-    $sql_res="SELECT * FROM reservas WHERE id=$id_reserva";
-    $reserva = $objConexion->consultarOne($sql_res);
-    $dni=$reserva["dni"];
-    $n_asiento=$reserva["asiento"];
-    $total=$reserva["total"];
-    $fecha_boleta=date("d-m-Y", strtotime($reserva['fecha_emi']));
-
-    $sql_cli="SELECT * FROM clientes WHERE dni=$dni";
-    $datos = $objConexion->consultarOne($sql_cli);
+    // datos de la reserva,cliente,asiento ..
+    $sql="SELECT r.id,r.dni,r.fecha_emi,r.total,a.n_asiento,c.nombres,c.apellidos,c.telefono FROM reservas r INNER JOIN asientos a ON r.asiento=a.id
+    INNER JOIN clientes c ON r.dni=c.dni WHERE r.id=$id_reserva";
+    $datos = $objConexion->consultarOne($sql);
+    $dni=$datos["dni"];
+    $n_asiento=$datos["n_asiento"];
+    $total=$datos["total"];
+    $fecha_boleta=date("d-m-Y", strtotime($datos['fecha_emi']));
     $nombres=$datos['nombres'];
     $apes=$datos['apellidos']; 
     $fullname=$nombres.' '.$apes;
-     
-    $ressa="SELECT * FROM salidas where id=$id_salida";
-    $salida = $objConexion->consultarOne($ressa);
-    $f=$salida['fecha'];
-    $fecha_sal = date("d-m-Y", strtotime($f));
+    //  datos de la salida
+    $sql_s="SELECT * FROM salidas where id=$id_salida";
+    $salida = $objConexion->consultarOne($sql_s);
+    $fecha_sal = date("d-m-Y", strtotime($salida['fecha']));
     $hora=$salida['hora']; 
     $origen=$salida['origen']; 
     $destino=$salida['destino']; 

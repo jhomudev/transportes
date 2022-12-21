@@ -35,3 +35,7 @@ function soloNumeros(e) {
    var key = e.charCode;
    return key >= 48 && key <= 57;
 }
+function soloPrecio(event) {
+   let tecla = (document.all) ? event.keyCode : event.which;
+   if ((tecla<48 || tecla>57) && tecla!=46) return false
+}

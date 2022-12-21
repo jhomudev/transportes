@@ -15,7 +15,7 @@
       $salida=$objConexion->consultarOne($sql_salida);
 
       $igv=(18/100)*$salida["monto"];
-      $total=$salida["monto"]+$igv;
+      $total=number_format(($salida["monto"]+$igv),2);
 
       if($asiento["isAvailable"]==0){
 ?>
@@ -76,7 +76,7 @@
                <select class="form__control" name="tx_asiento" id="asiento" required disabled>
                   <option value="<?php echo $asiento["id"]; ?>" selected><?php echo $asiento["n_asiento"] ?>*</option>
                   <?php 
-                     $sql_as="SELECT * FROM asientos WHERE id<>$id AND cod_salida=".$asiento['cod_salida']."";
+                     $sql_as="SELECT * FROM asientos WHERE id<>$id AND cod_salida=".$asiento['cod_salida']." AND isAvailable=0";
                      $asientos=$objConexion->consultar($sql_as);
                      foreach ($asientos as $as){
                   ?>
@@ -120,6 +120,10 @@
                   <td><?php echo $reserva["telefono"]; ?></td>
                </tr>
                <tr>
+                  <th>Fecha de reserva</th>
+                  <td><?php echo date("d-m-Y", strtotime($reserva["fecha_emi"])); ?></td>
+               </tr>
+               <tr>
                   <th>N° Asiento</th>
                   <td><?php echo $asiento["n_asiento"]; ?></td>
                </tr>
@@ -130,7 +134,7 @@
             </tbody>
          </table>
          <div class="modalInfo__buttons">
-            <button class="modalInfo__buttonAction" style="--clr:#4f8dd5;" onclick="editR('<?php echo $reserva['id']; ?>');" id="btn_editReserva">Editar reserva</button>
+            <button class="modalInfo__buttonAction" style="--clr:#4f8dd5;" onclick="editR('<?php echo $reserva['id']; ?>');" id="btn_editReserva">Modificar reserva</button>
             <button class="modalInfo__buttonAction" style="--clr:#f7616d;" onclick="deleteR('<?php echo $reserva['id']; ?>');" id="btn_deleteReserva">Eliminar reserva</button>
             <a href="boleta.php?id_reserva=<?php echo $reserva["id"]?>&id_salida=<?php echo $salida["id"]?>" target="_blank" class="modalInfo__buttonAction" style="--clr:#67e669;">Imprimir boleta</a>
          </div>

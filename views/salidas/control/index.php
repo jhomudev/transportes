@@ -24,6 +24,7 @@
       />
       <link rel="stylesheet" href="http://localhost/transportes/assets/css/control.css">
       <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script src="https://cdn.lordicon.com/fudrjiwc.js"></script>
       <title>SystemTransport</title>
    </head>
    <body>
@@ -49,7 +50,7 @@
                         <tr>
                            <td><?php echo $salida["origen"]; ?></td>
                            <td><?php echo $salida["destino"]; ?></td>
-                           <td><?php echo $salida["fecha"]; ?></td>
+                           <td><?php echo date("d-m-Y", strtotime($salida["fecha"])); ?></td>
                            <td><?php echo $salida["hora"]; ?></td>
                            <td>S/ <?php echo $salida["monto"]; ?></td>
                         </tr>
@@ -88,14 +89,13 @@
                                  <th>DNI</th>
                                  <th>Pasajero</th>
                                  <th>Asiento</th>
+                                 <th>Fecha de emisión</th>
+                                 <th>Total</th>
+                                 <th>Acciones</th>
                               </tr>
                            </thead>
-                           <tbody class="pasajeros__table__tbody">
-                              <tr>
-                                 <td>71749122</td>
-                                 <td>jhonan muñoz</td>
-                                 <td>6</td>
-                              </tr>
+                           <tbody class="pasajeros__table__tbody" id="pasajeros__table__tbody">
+                              <!-- response list pasajeros -->
                            </tbody>
                         </table>
                      </div>
