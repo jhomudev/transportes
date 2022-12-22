@@ -14,7 +14,8 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="./assets/css/login.css">
-   <title>Login</title>
+   <link rel="shortcut icon" href="http://localhost/transportes/assets/img/logo.png" type="image/x-icon">
+   <title>SystemTransport | Login</title>
 </head>
 <body>
    <div class="container_all">
