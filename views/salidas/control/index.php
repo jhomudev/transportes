@@ -81,6 +81,10 @@
                   <button class="btnshowList" id="btnshowList">Lista de pasajeros</button>
                   <div class="pasajerosBox hidden" id="pasajerosBox">
                      <button class="pasajeros__btnBack" id="pasajeros__btnBack"><i class="uil uil-multiply"></i></button>
+                     <a href="printListp.php?idS=<?php echo $_GET["id"]; ?>" target="_blank" class="pasajeros__btnPrint">
+                        <i class="uil uil-print"></i> 
+                        Imprimir lista
+                     </a>
                      <h3>Lista de pasajeros</h3>
                      <div class="pasejeros__tableBox">
                         <table class="pasajeros__table">

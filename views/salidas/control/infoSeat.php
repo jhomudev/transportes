@@ -128,7 +128,7 @@
                   <td><?php echo $asiento["n_asiento"]; ?></td>
                </tr>
                <tr>
-                  <th>Monto</th>
+                  <th>PAGA TOTAL</th>
                   <td>S/ <?php echo $total; ?></td>
                </tr>
             </tbody>

@@ -15,18 +15,6 @@
          include_once"views/menu.php"
       ?>
    </div>
-   <script>
-      // funcion ocultar barra menu en panel de admin
-      const btn = document.querySelector(".menu__iconBar");
-      let menu = document.querySelector(".menu");
-      let opcion_title = document.querySelectorAll(".menu__linkText");
-      function hide() {
-         //poniendo la clase
-         menu.classList.toggle("hide");
-         // btn.classList.toggle("center");
-         opcion_title.forEach((item) => item.classList.toggle("hide"));
-      }
-      btn.addEventListener("click", hide);
-   </script>
+   <script src="http://localhost/transportes/assets/js/app.js"></script>
 </body>
 </html>

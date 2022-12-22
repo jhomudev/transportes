@@ -8,9 +8,9 @@
       $salida=$objConexion->consultarOne($sql);
 
       // datos del cliente usando join
-      $sql_join="SELECT c.nombres,c.apellidos,r.id,r.asiento,r.dni,r.fecha_emi,r.total FROM reservas r 
+      $sql_join="SELECT c.nombres,c.apellidos,r.id,r.asiento,r.dni,r.fecha_emi,r.total,a.n_asiento FROM reservas r 
       INNER JOIN asientos a ON r.asiento = a.id
-      INNER JOIN clientes c ON c.dni=r.dni WHERE a.cod_salida = '".$salida["cod"]."'";
+      INNER JOIN clientes c ON c.dni=r.dni WHERE a.cod_salida = '".$salida["cod"]."' ORDER BY a.n_asiento ASC";
       $reservas=$objConexion->consultar($sql_join);
       if(!$reservas){
          echo '
@@ -33,7 +33,7 @@
             <tr>
                <td><?php echo $reserva["dni"]; ?></td>
                <td><?php echo $reserva["nombres"]." ".$reserva["apellidos"]; ?></td>
-               <td><?php echo $reserva["asiento"]; ?></td>
+               <td><?php echo $reserva["n_asiento"]; ?></td>
                <td><?php echo date("d-m-Y", strtotime($reserva["fecha_emi"])); ?></td>
                <td>S/ <?php echo $reserva["total"]; ?></td>
                <td>
