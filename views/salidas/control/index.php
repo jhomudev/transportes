@@ -1,4 +1,9 @@
 <?php 
+   session_start();
+   if(empty($_SESSION['username'])){
+      header("Location:./login.php");
+   }
+
    require "../../conexion.php";
    $objConexion=new Conexion();
    if($_GET){

@@ -136,8 +136,40 @@
    .menu__link span{
       margin-left: 10px;
    }
-   .menu.hide .menu__link span {
+   .menu.hide .menu__linkText {
       display: none;
+   }
+   .menu__userBox{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      background: var(--color-main);
+   }
+   .menu__userName{
+      width: 100%;
+      padding-left: 10px;
+      font-size:small;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+      text-align: center;
+      color:var(--color-light-green);
+   }
+   .menu__btnLogout{
+      margin: 0 auto;
+      padding: 5px 10px;
+      display:grid;
+      place-items: center;
+      font-size:medium;
+      color:white;
+   }
+   .menu__btnLogout:hover{
+      background: var(--color-main-hover);
+      border-radius:3px; 
    }
 </style>
 <header class="menu">
@@ -167,5 +199,9 @@
          </li>
       </ul>
    </nav>
+   <div class="menu__userBox">
+      <h3 class="menu__userName menu__linkText"><?php echo $_SESSION['fullname']; ?></h3>
+      <a href="http://localhost/transportes/logout.php" class="menu__btnLogout" title="Cerrar sesión"><i class="uil uil-signout"></i></a>
+   </div>
 </header>
 
