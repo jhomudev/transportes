@@ -43,7 +43,7 @@
                         // entra
                         session_start();
                         $_SESSION['username']=$username;
-                        $_SESSION['username']=$password;
+                        $_SESSION['password']=$password;
                         $_SESSION['fullname']=$user["nombres_apes"];
                         header("Location:./");
                      }else{
