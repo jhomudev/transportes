@@ -11,7 +11,7 @@
       $sql="SELECT * FROM asientos WHERE id=$id";
       $asiento=$objConexion->consultarOne($sql);
       
-      $sql_salida="SELECT * FROM salidas WHERE cod=".$asiento['cod_salida']."";
+      $sql_salida="SELECT s.monto,s.id FROM salidas s INNER JOIN vehiculos v ON s.id_vehiculo=v.id WHERE v.cod=".$asiento['cod_vehiculo']."";
       $salida=$objConexion->consultarOne($sql_salida);
 
       $igv=(18/100)*$salida["monto"];
@@ -76,7 +76,7 @@
                <select class="form__control" name="tx_asiento" id="asiento" required disabled>
                   <option value="<?php echo $asiento["id"]; ?>" selected><?php echo $asiento["n_asiento"] ?>*</option>
                   <?php 
-                     $sql_as="SELECT * FROM asientos WHERE id<>$id AND cod_salida=".$asiento['cod_salida']." AND isAvailable=0";
+                     $sql_as="SELECT * FROM asientos WHERE id<>$id AND cod_vehiculo=".$asiento['cod_vehiculo']." AND isAvailable=0";
                      $asientos=$objConexion->consultar($sql_as);
                      foreach ($asientos as $as){
                   ?>
@@ -142,4 +142,3 @@
       }
    }
 ?>
-<!--  -->

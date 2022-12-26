@@ -72,7 +72,7 @@
       <select class="form__control" name="tx_idAsiento" id="asiento" required>
          <option value="<?php echo $reserva["asiento"]; ?>" selected><?php echo $asiento["n_asiento"] ?>*</option>
          <?php 
-            $sql_as="SELECT * FROM asientos WHERE id<>".$reserva["asiento"]." AND cod_salida=".$asiento['cod_salida']." AND isAvailable=0";
+            $sql_as="SELECT * FROM asientos WHERE id<>".$reserva["asiento"]." AND cod_vehiculo=".$asiento['cod_vehiculo']." AND isAvailable=0";
             $asientos=$objConexion->consultar($sql_as);
             foreach ($asientos as $as){
          ?>

@@ -1,17 +1,23 @@
 <?php 
    ob_start();
+   session_start();
+   if(empty($_SESSION['username'])){
+      header("Location:http://localhost/transportes/login.php");
+   }
+
    require "../../conexion.php";
    $objConexion=new Conexion();
 
    if($_GET){
       $id_salida=$_GET["idS"];
-      $sql="SELECT * from salidas WHERE id = $id_salida";
+      $sql="SELECT s.id,s.id_vehiculo,s.origen,s.destino,s.fecha,s.hora,s.monto,c.nombres,c.apellidos,c.telefono from salidas s INNER JOIN conductores c ON s.id_conductor=c.id  WHERE s.id = $id_salida";
       $salida=$objConexion->consultarOne($sql);
 
       // datos del cliente usando join
       $sql_join="SELECT c.nombres,c.apellidos,r.id,r.asiento,r.dni,r.fecha_emi,r.total,a.n_asiento FROM reservas r 
       INNER JOIN asientos a ON r.asiento = a.id
-      INNER JOIN clientes c ON c.dni=r.dni WHERE a.cod_salida = '".$salida["cod"]."' ORDER BY a.n_asiento ASC";
+      INNER JOIN clientes c ON c.dni=r.dni
+      INNER JOIN vehiculos v ON v.cod=a.cod_vehiculo WHERE v.id = '".$salida["id_vehiculo"]."' ORDER BY a.n_asiento ASC";
       $pasajeros=$objConexion->consultar($sql_join);
    }
 ?>
@@ -40,7 +46,7 @@
          margin: 10px 0;
          text-transform:uppercase;
       }
-      thead{
+      thead,th{
          background: #090432;
          color:white;
       }
@@ -71,6 +77,12 @@
             <td><?php echo date("d-m-Y",strtotime($salida["fecha"])); ?></td>
             <td><?php echo $salida["hora"]; ?></td>
             <td>S/ <?php echo ($salida["monto"]*0.18)+$salida["monto"]; ?></td>
+         </tr>
+         <tr>
+            <th>CONDUCTOR</th>
+            <td colspan=2><?php echo $salida["nombres"]." ".$salida["apellidos"]; ?></td>
+            <th>N° TELÉFONO</th>
+            <td><?php echo $salida["telefono"]; ?></td>
          </tr>
       </tbody>
    </table>

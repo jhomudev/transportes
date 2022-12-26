@@ -1,8 +1,10 @@
 <?php 
    session_start();
    if(empty($_SESSION['username'])){
-      header("Location:./login.php");
+      header("Location:http://localhost/transportes/login.php");
    }
+   require "./../conexion.php";
+   $objConexion=new Conexion();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +27,7 @@
                <form class="form" id="form_add" >
                   <h3 id="title_action">Agregar Salida</h3>
                   <div class="form__group">
-                     <label for="codigo">Origen</label>
+                     <label for="origen">Origen</label>
                      <input type="hidden" name="id_salida" id="id_salida"/>
                      <input
                         type="text"
@@ -35,7 +37,7 @@
                      />
                   </div>
                   <div class="form__group">
-                     <label for="codigo">Destino</label>
+                     <label for="destino">Destino</label>
                      <input
                         type="text"
                         class="form__control"
@@ -44,7 +46,7 @@
                      />
                   </div>
                   <div class="form__group">
-                     <label for="codigo">Fecha</label>
+                     <label for="fecha">Fecha</label>
                      <input
                         type="date"
                         class="form__control"
@@ -53,7 +55,7 @@
                      />
                   </div>
                   <div class="form__group">
-                     <label for="codigo">Hora</label>
+                     <label for="hora">Hora</label>
                      <input
                         type="time"
                         class="form__control"
@@ -62,7 +64,7 @@
                      />
                   </div>
                   <div class="form__group">
-                     <label for="codigo">Monto S/</label>
+                     <label for="monto">Monto S/</label>
                      <input
                         type="text"
                         class="form__control"
@@ -71,6 +73,33 @@
                         onkeypress="return soloPrecio(event);"
                         required
                      />
+                  </div>
+                  <div class="form__group">
+                     <label for="vehiculo">Vehiculo</label>
+                     <select name="tx_vehiculo" id="vehiculo" class="form__control">
+                       <!-- response -->
+                     </select>
+                  </div>
+                  <div class="form__group">
+                     <label for="conductor">Conductor</label>
+                     <select name="tx_conductor" id="conductor" class="form__control">
+                        <?php 
+                           $sql_c="SELECT *FROM conductores WHERE estado=1 and hasSalida=0";
+                           $conductores=$objConexion->consultar($sql_c);
+                           if(!$conductores){
+                              echo '<option value="" selected>No hay conductores disponibles</option>';
+                           }else{
+                              echo '
+                                 <option value="" selected>Asigne un conductor</option>
+                              ';
+                              foreach($conductores as $conductor){
+                                 echo '
+                                 <option value="'.$conductor["id"].'">'.$conductor["nombres"].' '.$conductor["apellidos"].'-'.$conductor["licencia"].'</option>
+                                 ';
+                              }
+                           }
+                        ?>
+                     </select>
                   </div>
                   <input type="submit" value="Agregar" id="btnRegistrar" class="form__button" />
                </form>

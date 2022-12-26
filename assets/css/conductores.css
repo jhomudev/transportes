@@ -9,33 +9,28 @@
    position: relative;
    font-size: xx-large;
    text-align: center;
-   margin-top: 5vh;
+   margin-top: 10vh;
 }
 .main{
    width: 100%;
    padding: 1em;
-   display: flex;
-   justify-content: center;
-   flex-wrap: wrap;
-   gap:1em;
+   display:grid;
+   grid-template-columns: minmax(300px,340px) minmax(550px,1fr);
+   grid-auto-rows: 550px;
+   grid-gap: 2em;
 }
 .form{
-   position: relative;
    width: 100%;
-   max-width: 550px;
    padding:25px;
    border-radius: 5px;
    background: var(--color-light);
+   grid-column: auto;
    display: flex;
-   flex-wrap: wrap;
+   flex-direction: column;
    gap: 1em;
 }
 .form h3{
-   width: 100%;
    text-align: center;
-}
-.form__group{
-   width: 48%;
 }
 .form__group label{
    display: block;
@@ -50,7 +45,6 @@
    font-size: smaller;
 }
 .form__button{
-   width: 100%;
    padding: 8px;
    background: var(--color-cyan);
    color: white;
@@ -59,8 +53,7 @@
    cursor: pointer;
 }
 .tableBox{
-   width: 100%;
-   height: 40em;
+   grid-column: auto;
    overflow: auto;
 }
 .table{
@@ -111,8 +104,5 @@
    .form{
       max-width: 430px;
       margin: 0 auto;
-   }
-   .form__group{
-      width: 100%;
    }
 }

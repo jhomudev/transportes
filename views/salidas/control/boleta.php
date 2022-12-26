@@ -1,5 +1,9 @@
 <?php
     ob_start();
+    session_start();
+    if(empty($_SESSION['username'])){
+        header("Location:http://localhost/transportes/login.php");
+    }
     require "../../conexion.php";
     $objConexion=new Conexion();
 
@@ -174,7 +178,7 @@
             <table class="paga">
                 <tr><td class="t-impo"><strong>SUBTOTAL</strong> </td><td class="impo tex-right">  S/ <?php echo $monto; ?></td></tr>
                 <tr><td class="t-impo"><strong>DESCUENTO</strong> </td><td class="impo tex-right">  S/ 0.00</td></tr>
-                <tr><td class="t-impo"><strong>IGV 18%</strong>     </td><td class="impo tex-right"> S/ <?php echo ($monto*0.18); ?></td></tr>
+                <tr><td class="t-impo"><strong>IGV 18%</strong>     </td><td class="impo tex-right"> S/ <?php echo number_format($monto*0.18,2); ?></td></tr>
                 <tr><td class="t-impo"><strong>IMPORTE TOTAL</strong></td><td class="impo tex-right"> S/ <?php echo $total; ?></td></tr>
             </table>
         </div>

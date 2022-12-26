@@ -21,7 +21,7 @@ pasajeros__btnBack.addEventListener("click", showList);
 modalInfo__back.addEventListener("click", hideModal);
 
 //? PETICIONES
-function getSeats(condicion, idElement) {
+function getSeats(condicion, element) {
    // obteniendo los datos de la url get
    let params = new URLSearchParams(location.search);
    let id_salida = params.get("id");
@@ -33,12 +33,12 @@ function getSeats(condicion, idElement) {
    })
       .then((r) => r.text())
       .then((r) => {
-         document.getElementById(idElement).innerHTML = r;
+         element.innerHTML = r;
       });
 }
 function getAllSeats() {
-   getSeats("<=18", "bus__left");
-   getSeats(">18", "bus__right");
+   getSeats("left", bus__left);
+   getSeats("right", bus__right);
 }
 getAllSeats();
 
@@ -132,8 +132,7 @@ function deleteR(idR) {
             .then((r) => r.text())
             .then((r) => {
                if (r == "ok") {
-                  hideModal();
-                  bus.focus();
+                  // hideModal();
                   getAllSeats();
                   getListP();
                   Swal.fire({

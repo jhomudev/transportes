@@ -4,13 +4,14 @@
 
    if($_POST){
       $id_salida=$_POST["id"];
-      $sql="SELECT cod,id from salidas WHERE id = $id_salida";
+      $sql="SELECT * FROM salidas WHERE id = $id_salida";
       $salida=$objConexion->consultarOne($sql);
 
       // datos del cliente usando join
       $sql_join="SELECT c.nombres,c.apellidos,r.id,r.asiento,r.dni,r.fecha_emi,r.total,a.n_asiento FROM reservas r 
       INNER JOIN asientos a ON r.asiento = a.id
-      INNER JOIN clientes c ON c.dni=r.dni WHERE a.cod_salida = '".$salida["cod"]."' ORDER BY a.n_asiento ASC";
+      INNER JOIN clientes c ON c.dni=r.dni
+      INNER JOIN vehiculos v ON v.cod=a.cod_vehiculo WHERE v.id = '".$salida["id_vehiculo"]."' ORDER BY a.n_asiento ASC";
       $reservas=$objConexion->consultar($sql_join);
       if(!$reservas){
          echo '

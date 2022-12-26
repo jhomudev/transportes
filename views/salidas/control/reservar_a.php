@@ -4,14 +4,14 @@
    if($_POST){
       date_default_timezone_set('America/Lima');
       $dni=$_POST["tx_dni"];
-      $nombres=$_POST["tx_nombres"];
-      $apellidos=$_POST["tx_apellidos"];
+      $nombres=strtoupper($_POST["tx_nombres"]);
+      $apellidos=strtoupper($_POST["tx_apellidos"]);
       $telefono=$_POST["tx_telefono"];
       $id_asiento=$_POST["tx_idAsiento"];
       $fecha_emi=date("Y-m-d");
 
       // obtencion de datos de salida. su precio para eltotal con igv
-      $sql="SELECT s.monto FROM salidas s INNER JOIN asientos a ON s.cod=a.cod_salida WHERE a.id=$id_asiento";
+      $sql="SELECT s.monto FROM salidas s INNER JOIN vehiculos v ON s.id_vehiculo=v.id INNER JOIN asientos a ON v.cod=a.cod_vehiculo WHERE a.id=$id_asiento";
       $salida=$objConexion->consultarOne($sql);
 
       $igv=(18/100)*$salida["monto"];

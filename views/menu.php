@@ -104,9 +104,8 @@
       color: white;
       width: 0;
       height: 0;
-      top: 0;
+      bottom: 50%;
       left: 90%;
-      transform:translate(0,-20px);
       text-align: center;
       overflow: hidden;
       transition: all 0.3s;
@@ -114,9 +113,9 @@
    }
    .menu.hide .menu__item:hover::before {
       position: absolute;
-      width: 5em;
+      width: auto;
       height: auto;
-      padding: 5px;
+      padding: 3px 7px;
       z-index: 1000;
    }
    .menu__link{
@@ -179,22 +178,28 @@
    </div>
    <nav class="menu__nav">
       <ul>
-         <li class="menu__item" style="--color: #a70707; --text: 'Clientes'">
-            <a href="http://localhost/transportes/views/clientes/" class="menu__link">
-               <i class="uil uil-users-alt"></i>
-               <span class="menu__linkText">Clientes</span>
-            </a>
-         </li>
          <li class="menu__item" style="--color: #3dcda2; --text: 'Salidas'">
             <a href="http://localhost/transportes/views/salidas/" class="menu__link">
                <i class="uil uil-map-marker-plus"></i>
                <span class="menu__linkText">Salidas</span>
             </a>
          </li>
-         <li class="menu__item" style="--color: #09548a; --text: 'Reservas'">
-            <a href="http://localhost/transportes/views/reservas/" class="menu__link">
-               <i class="uil uil-moneybag"></i>
-               <span class="menu__linkText">Reservas</span>
+         <li class="menu__item" style="--color: #a70707; --text: 'Clientes'">
+            <a href="http://localhost/transportes/views/clientes/" class="menu__link">
+               <i class="uil uil-users-alt"></i>
+               <span class="menu__linkText">Clientes</span>
+            </a>
+         </li>
+         <li class="menu__item" style="--color: #09548a; --text: 'Vehículos'">
+            <a href="http://localhost/transportes/views/vehiculos/" class="menu__link">
+               <i class="uil uil-bus-alt"></i>
+               <span class="menu__linkText">Vehículos</span>
+            </a>
+         </li>
+         <li class="menu__item" style="--color: #e5d767; --text: 'Conductores'">
+            <a href="http://localhost/transportes/views/conductores/" class="menu__link">
+               <i class="uil uil-user-md"></i>
+               <span class="menu__linkText">Conductores</span>
             </a>
          </li>
       </ul>

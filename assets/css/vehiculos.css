@@ -4,6 +4,7 @@
    padding: 20px;
    background: var(--color-light-green);
    overflow: auto;
+   
 }
 .title{
    position: relative;
@@ -15,9 +16,9 @@
    width: 100%;
    padding: 1em;
    display: flex;
-   justify-content: center;
-   flex-wrap: wrap;
-   gap:1em;
+   flex-direction: column;
+   align-items: center;
+   gap: 1em;
 }
 .form{
    position: relative;
@@ -27,12 +28,13 @@
    border-radius: 5px;
    background: var(--color-light);
    display: flex;
+   /* justify-content: center; */
    flex-wrap: wrap;
    gap: 1em;
 }
 .form h3{
-   width: 100%;
    text-align: center;
+   width: 100%;
 }
 .form__group{
    width: 48%;
@@ -48,6 +50,7 @@
    border: 1px solid  var(--color-light-green);
    border-radius: 3px;
    font-size: smaller;
+   /* text-transform: uppercase; */
 }
 .form__button{
    width: 100%;
@@ -60,7 +63,7 @@
 }
 .tableBox{
    width: 100%;
-   height: 40em;
+   grid-column: auto;
    overflow: auto;
 }
 .table{

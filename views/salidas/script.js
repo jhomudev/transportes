@@ -10,6 +10,22 @@ function mostrar_data() {
 }
 mostrar_data();
 
+function getEntities(entity, element) {
+   fetch("disponibles.php", {
+      method: "POST",
+      body: new URLSearchParams(`entity=${entity}`),
+   })
+      .then((r) => r.text())
+      .then((r) => {
+         element.innerHTML = r;
+      });
+}
+function getAllEntities() {
+      getEntities("conductor", conductor);
+      getEntities("vehiculo", vehiculo);
+}
+getAllEntities();
+
 btnRegistrar.addEventListener("click", (e) => {
    e.preventDefault();
    fetch("create.php", {
@@ -33,7 +49,7 @@ btnRegistrar.addEventListener("click", (e) => {
                   showConfirmButton: false,
                   timer: 1500,
                });
-            } else if(r == "modificado"){
+            } else if (r == "modificado") {
                Swal.fire({
                   position: "center",
                   icon: "success",
@@ -43,9 +59,13 @@ btnRegistrar.addEventListener("click", (e) => {
                });
                btnRegistrar.value = "Agregar";
                title_action.innerHTML = "Agregar Salida";
+            } else {
+               console.log(r);
             }
+            id_salida.value = "";
             form_add.reset();
             mostrar_data();
+            getAllEntities();
          }
       });
 });
@@ -76,7 +96,7 @@ function eliminar(id) {
                      showConfirmButton: false,
                      timer: 1500,
                   });
-               } else if(r=="cannot") {
+               } else if (r == "cannot") {
                   Swal.fire({
                      icon: "error",
                      title: "No se pudo eliminar la salida",
@@ -90,30 +110,43 @@ function eliminar(id) {
                   });
                   console.log(r);
                }
+               getAllEntities();
             });
       }
    });
 }
 
 function editar(id) {
+   getAllEntities();
    fetch("edit.php", {
       method: "POST",
       body: new URLSearchParams(`id=${id}`),
    })
-      .then((r) => r.json())
+      .then((r) => r.text())
       .then((r) => {
-         id_salida.value = r.id;
-         origen.focus();
-         origen.value = r.origen;
-         destino.value = r.destino;
-         fecha.value = r.fecha;
-         hora.value = r.hora;
-         monto.value = r.monto;
-         btnRegistrar.value = "Actualizar";
-         title_action.innerHTML = "Modificar Salida";
+         if (r == "cannot") {
+            Swal.fire({
+               icon: "error",
+               title: "No se puede editar la salida",
+               text: "La salida tiene reservas, por lo cual no se puede modificar",
+            });
+         } else {
+            r = JSON.parse(r);
+            id_salida.value = r.idS;
+            origen.focus();
+            origen.value = r.origen;
+            destino.value = r.destino;
+            fecha.value = r.fecha;
+            hora.value = r.hora;
+            monto.value = r.monto;
+            vehiculo.innerHTML += `<option selected value="${r.idV}">${r.n_placa}-${r.total_asientos}  asientos</option>`;
+            conductor.innerHTML += `<option selected value="${r.idC}">${r.nombres} ${r.apellidos}-${r.licencia}</option>`;
+            btnRegistrar.value = "Actualizar";
+            title_action.innerHTML = "Modificar Salida";
+         }
       });
 }
 
 function control(id) {
-   window.location.href="control?id=" + id;
+   window.location.href = "control?id=" + id;
 }
