@@ -1,6 +1,6 @@
 <?php 
    session_start();
-   if(isset($_SESSION['username'])){
+   if(isset($_SESSION["usename"])){
       header("Location:./");
    }
 
@@ -42,9 +42,7 @@
                      if($user["password"]==$password){
                         // entra
                         session_start();
-                        $_SESSION['username']=$username;
-                        $_SESSION['password']=$password;
-                        $_SESSION['fullname']=$user["nombres_apes"];
+                        $_SESSION=$user;
                         header("Location:./");
                      }else{
                         echo '

@@ -184,6 +184,10 @@
                <span class="menu__linkText">Salidas</span>
             </a>
          </li>
+         <!-- ACCESO  SOLO A ADMINISTRADOR -->
+         <?php 
+            if($_SESSION["type"]==1){
+         ?>
          <li class="menu__item" style="--color: #a70707; --text: 'Clientes'">
             <a href="http://localhost/transportes/views/clientes/" class="menu__link">
                <i class="uil uil-users-alt"></i>
@@ -202,10 +206,13 @@
                <span class="menu__linkText">Conductores</span>
             </a>
          </li>
+         <?php 
+            }
+         ?>
       </ul>
    </nav>
    <div class="menu__userBox">
-      <h3 class="menu__userName menu__linkText"><?php echo $_SESSION['fullname']; ?></h3>
+      <h3 class="menu__userName menu__linkText"><?php echo $_SESSION['nombres_apes']; ?></h3>
       <a href="http://localhost/transportes/logout.php" class="menu__btnLogout" title="Cerrar sesión"><i class="uil uil-signout"></i></a>
    </div>
 </header>

@@ -23,7 +23,10 @@
          <?php include "../menu.php";?>
          <div class="view">
             <h1 class="title">Gestión de Salidas</h1>
-            <main class="main">         
+            <main class="main">
+               <?php    
+                  if($_SESSION["type"]==1){
+               ?>
                <form class="form" id="form_add" >
                   <h3 id="title_action">Agregar Salida</h3>
                   <div class="form__group">
@@ -77,7 +80,7 @@
                   <div class="form__group">
                      <label for="vehiculo">Vehiculo</label>
                      <select name="tx_vehiculo" id="vehiculo" class="form__control">
-                       <!-- response -->
+                     <!-- response -->
                      </select>
                   </div>
                   <div class="form__group">
@@ -103,6 +106,9 @@
                   </div>
                   <input type="submit" value="Agregar" id="btnRegistrar" class="form__button" />
                </form>
+               <?php 
+                  }
+               ?>         
                <div class="tableBox">
                   <table class="table">
                      <thead class="table__thead">
