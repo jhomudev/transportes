@@ -22,9 +22,6 @@
       }else{
          if(empty($_POST["tx_id_reserva"])){
             try{
-               // crear reserva
-               $sql_r="INSERT INTO reservas(asiento,dni,fecha_emi,total) VALUES ($id_asiento,$dni,'$fecha_emi',$total)";
-               $objConexion->ejecutar($sql_r);
                //verificar si hay cliente con dni mismo, si lo hay no crear nuevo cliente
                $sql_verify="SELECT * FROM clientes WHERE dni=$dni";
                $cliente=$objConexion->consultarOne($sql_verify);
@@ -32,6 +29,9 @@
                   $sql_c="INSERT INTO clientes(dni,nombres,apellidos,telefono) VALUES ($dni,'$nombres','$apellidos',$telefono)";
                   $objConexion->ejecutar($sql_c);
                }
+               // crear reserva
+               $sql_r="INSERT INTO reservas(asiento,dni,fecha_emi,total) VALUES ($id_asiento,$dni,'$fecha_emi',$total)";
+               $objConexion->ejecutar($sql_r);
                // cambiar estado de asiento a ocupado
                $sql_a="UPDATE asientos SET isAvailable = 1 WHERE id=$id_asiento";
                $objConexion->ejecutar($sql_a);
